@@ -8,6 +8,7 @@ import { AdminApp } from "./admin/App";
 import { CustomerApp } from "./customer/App";
 import { Print } from "./pages/Print";
 import { Gift } from "./pages/Gift";
+import { cachedMe } from "./store";
 
 type Me = MeAdmin | MeCustomer;
 
@@ -70,7 +71,12 @@ function Root() {
   const hash = useHash();
   const load = async () => {
     try { const m = await api.get<Me>("/api/me"); setCsrf(m.csrf); if ("settings" in m && m.settings?.accent) setAccent(m.settings.accent); setMe(m); }
-    catch (e) { setMe(e instanceof ApiError && e.status === 401 ? null : undefined); if (!(e instanceof ApiError)) toast("تعذر الاتصال، تأكدي من الإنترنت"); }
+    catch (e) {
+      if (e instanceof ApiError && e.status === 401) return setMe(null);
+      const cached = await cachedMe(); // offline: open her saved copy, ticks queue until back online
+      if (cached) return setMe(cached);
+      toast("تعذر الاتصال، تأكدي من الإنترنت");
+    }
   };
   useEffect(() => { load(); }, []);
   if (me === undefined) return <div class="loading">مزيونة</div>;
