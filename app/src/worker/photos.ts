@@ -18,7 +18,8 @@ export const photos = new Hono<Env>();
 
 photos.post("/api/photos", async (c) => {
   const db = c.env.DB, me = c.var.user;
-  if (Number(c.req.header("Content-Length") ?? 0) > MAX + 100_000) return fail(400, "too_big");
+  const len = Number(c.req.header("Content-Length"));
+  if (!len || len > MAX + 100_000) return fail(400, "too_big"); // no length (chunked) or too big: refuse before parsing
   const fd = await c.req.formData().catch(() => fail(400, "form"));
   const file = fd.get("file");
   if (!(file instanceof File) || !file.size) return fail(400, "file");

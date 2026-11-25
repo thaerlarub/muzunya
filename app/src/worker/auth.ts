@@ -77,24 +77,24 @@ auth.post("/api/auth/login", async (c) => {
   const pw = typeof b.password === "string" ? b.password.slice(0, 200) : "";
   const phone = normPhone(typeof b.phone === "string" ? b.phone : "") ?? String(b.phone ?? "").slice(0, 40);
   const keys = ["p:" + phone, "ip:" + (c.req.header("CF-Connecting-IP") || "local")];
-  const { results: att } = await db.prepare("SELECT count, window_start FROM login_attempts WHERE key IN (?, ?)").bind(...keys).all<Row>();
-  if (att.some((a) => a.count >= 5 && now < a.window_start + WINDOW)) return fail(429, "locked");
+  // Count the attempt before checking the password (atomic, so parallel requests cannot slip past the limit).
+  const bump = db.prepare(
+    `INSERT INTO login_attempts (key, count, window_start) VALUES (?, 1, ?)
+     ON CONFLICT(key) DO UPDATE SET
+       count = CASE WHEN window_start + ? <= excluded.window_start THEN 1 ELSE count + 1 END,
+       window_start = CASE WHEN window_start + ? <= excluded.window_start THEN excluded.window_start ELSE window_start END
+     RETURNING count`,
+  );
+  const counts = await db.batch<{ count: number }>(keys.map((k) => bump.bind(k, now, WINDOW, WINDOW)));
+  if (counts.some((r) => (r.results[0]?.count ?? 0) > 5)) return fail(429, "locked");
 
   const u = await db.prepare("SELECT id, role, salt, pw_hash, status FROM users WHERE phone = ?").bind(phone).first<Row>();
   const ok = await checkPw(pw, u?.salt ?? DUMMY_SALT, u?.pw_hash ?? DUMMY_HASH);
-  if (!u || !ok) {
-    const bump = db.prepare(
-      `INSERT INTO login_attempts (key, count, window_start) VALUES (?, 1, ?)
-       ON CONFLICT(key) DO UPDATE SET
-         count = CASE WHEN window_start + ? <= excluded.window_start THEN 1 ELSE count + 1 END,
-         window_start = CASE WHEN window_start + ? <= excluded.window_start THEN excluded.window_start ELSE window_start END`,
-    );
-    await db.batch(keys.map((k) => bump.bind(k, now, WINDOW, WINDOW)));
-    return fail(401, "bad");
-  }
+  if (!u || !ok) return fail(401, "bad");
   if (u.status !== "active") return fail(401, "archived");
   await db.batch([
     db.prepare("DELETE FROM login_attempts WHERE key = ?").bind(keys[0]),
+    db.prepare("UPDATE login_attempts SET count = max(count - 1, 0) WHERE key = ?").bind(keys[1]), // a good sign-in does not count against the IP
     db.prepare("DELETE FROM sessions WHERE expires_at < ?").bind(now),
   ]);
   await startSession(c, u.id, u.role);
