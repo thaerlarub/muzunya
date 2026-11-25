@@ -1,0 +1,22 @@
+{
+  "name": "muzuna-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "watch": "vite build --watch",
+    "dev": "wrangler dev --port 8787",
+    "test": "node --test src/shared/",
+    "check": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.worker.json",
+    "db:local": "wrangler d1 migrations apply DB --local"
+  },
+  "dependencies": {
+    "hono": "4.13.18",
+    "preact": "11.2.0"
+  },
+  "devDependencies": {
+    "typescript": "7.0.2",
+    "vite": "8.3.8",
+    "wrangler": "4.160.0"
+  }
+}
