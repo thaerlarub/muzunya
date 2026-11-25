@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>مزيونة | كتيب الوصفات</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Aref+Ruqaa:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--a:#c48bd9;--ink:#2b2233;--muted:#6f6478}
+:root{--a2:color-mix(in srgb,var(--a) 22%,#fff);--a3:color-mix(in srgb,var(--a) 9%,#fff);--ad:color-mix(in srgb,var(--a) 70%,#000)}
+*{box-sizing:border-box}
+body{margin:0;background:#ebe7ee;color:var(--ink);font:14px/1.6 Tajawal,Tahoma,Arial,sans-serif}
+.panel{position:sticky;top:0;z-index:9;background:#fff;border-bottom:3px solid var(--a);box-shadow:0 4px 18px #0001;padding:12px 18px}
+.panel h2{margin:0 0 6px;font-size:17px;color:var(--ad)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.panel input[type=text]{font:inherit;font-size:15px;padding:7px 9px;border:1.5px solid #ddd;border-radius:8px;min-width:220px}
+.btn{font:inherit;font-weight:700;font-size:14px;padding:9px 16px;border-radius:9px;border:0;cursor:pointer;background:var(--a);color:#fff}
+.btn.ghost{background:var(--a3);color:var(--ad);border:1.5px solid var(--a2)}
+.sw{width:30px;height:30px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 1.5px #ccc;cursor:pointer}
+.hint{font-size:12px;color:var(--muted)}
+.pages{padding:24px 0 60px;display:flex;flex-direction:column;align-items:center;gap:22px}
+.page{width:210mm;height:297mm;background:#fff;position:relative;overflow:hidden;box-shadow:0 6px 24px #0002}
+.foot{position:absolute;bottom:7mm;left:0;right:0;text-align:center;line-height:1.15}
+.foot .brand{font-family:'Aref Ruqaa',serif;font-size:22px;color:var(--a)}
+.foot .h{font-size:10.5px;color:var(--muted)}
+/* cover and dividers */
+.solid{background:var(--a);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.frame{position:absolute;inset:14mm;border:1.5px solid #ffffff88}
+.circ{width:62mm;height:62mm;border-radius:50%;border:2px solid #ffffffaa;display:grid;place-items:center;font-family:'Aref Ruqaa',serif;font-size:44px;box-shadow:0 0 0 8mm #ffffff12;margin-bottom:18mm;position:relative}
+.solid h1{font-family:'Aref Ruqaa',serif;font-size:50px;margin:0;line-height:1.2;position:relative}
+.solid .en{font-size:22px;font-weight:700;letter-spacing:1px;opacity:.95;position:relative}
+.solid .sub{font-size:16px;margin-top:8px;opacity:.95;position:relative;max-width:140mm}
+.solid .foot .brand,.solid .foot .h{color:#fff}
+/* tips */
+.in{padding:16mm 15mm 26mm}
+.ttl{font-family:'Aref Ruqaa',serif;color:var(--a);font-size:44px;text-align:center;margin:0 0 4px;line-height:1.3}
+.lead{text-align:center;color:var(--muted);font-size:17px;margin:0 0 14px}
+.tips{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:10px}
+.tip{border:2px solid var(--a2);border-radius:14px;padding:18px 16px;min-height:50mm;display:flex;gap:12px;align-items:flex-start;background:#fff}
+.tip .i{flex:none;width:64px;height:64px;border-radius:50%;background:var(--a3);display:grid;place-items:center;font-size:33px;border:2px solid var(--a2)}
+.tip b{display:block;color:var(--ad);font-size:18px;margin-bottom:2px}
+.tip p{margin:0;font-size:15.5px;line-height:1.75}
+table{width:100%;border-collapse:collapse;font-size:16.5px;margin-top:10px}
+th{background:var(--a);color:#fff;padding:9px 8px;font-weight:700}
+td{border:1.5px solid var(--a2);padding:13px 12px;text-align:center}
+td:first-child{text-align:right;font-weight:700}
+.box{margin-top:18px;background:var(--a3);border:2px dashed var(--a);border-radius:14px;padding:16px 18px;font-size:16px}
+/* recipe */
+.hero{height:128mm;display:grid;grid-template-columns:1fr 1fr;gap:2mm}
+.ph{position:relative;overflow:hidden;cursor:pointer;background:linear-gradient(135deg,var(--a2),var(--a3) 60%,#fff);display:grid;place-items:center}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ph .e{font-size:84px;filter:drop-shadow(0 8px 10px #0002)}
+.ph .add{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:#fffd;color:var(--ad);font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;white-space:nowrap}
+.ph:hover .add{background:var(--a);color:#fff}
+.ph .x{position:absolute;top:8px;left:8px;width:28px;height:28px;border-radius:50%;background:#000a;color:#fff;border:0;font-size:16px;cursor:pointer;display:none}
+.ph.has .x{display:block}.ph.has .add{display:none}
+.tcard{position:relative;margin:-17mm 10mm 0;background:#fff;box-shadow:0 8px 22px #0002;padding:7mm 8mm 5mm;text-align:center}
+.tcard h2{font-family:'Aref Ruqaa',serif;color:var(--a);font-size:38px;margin:0;line-height:1.3}
+.tag{display:inline-block;background:var(--a2);color:var(--ad);font-weight:700;font-size:12px;padding:3px 12px;border-radius:20px;margin-top:4px}
+.rb{display:grid;grid-template-columns:1fr 64mm;gap:10mm;margin:9mm 14mm 0}
+.rb h3{margin:0 0 8px;font-size:20px;text-align:center;border-bottom:2px solid var(--a2);padding-bottom:5px}
+.rb ol{margin:0;padding-right:20px;font-size:15.5px;line-height:1.95;font-weight:500}
+.rb ul{margin:0;padding-right:18px;font-size:15px;line-height:1.95;font-weight:700}
+.rb li::marker{color:var(--a);font-weight:800}
+.nt{margin:5mm 14mm 0;border-top:1.5px solid var(--a2);padding-top:8px;font-size:14.5px;font-weight:700}
+.nt span{color:var(--a)}
+.why{margin:8mm 14mm 0;background:var(--a3);border-radius:10px;padding:10px 14px;font-size:14.5px}
+.why b{color:var(--ad)}
+.edit .page{outline:2px dashed #0002}
+@media (max-width:860px){.pages{zoom:.5}}
+@page{size:A4;margin:0}
+@media print{body{background:#fff}.panel{display:none}.pages{padding:0;gap:0;zoom:1}.page{box-shadow:none;break-after:page}.ph .add,.ph .x{display:none!important}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<div class="panel">
+ <h2>كتيب وصفات مزيونة لزيادة الوزن</h2>
+ <div class="row">
+  <input type="text" id="hd" value="مزيونة | خلطة الأنوثة" title="نص التذييل">
+  <span class="hint">لون التصميم:</span>
+  <span class="sw" style="background:#c48bd9" data-c="#c48bd9"></span>
+  <span class="sw" style="background:#d98ca3" data-c="#d98ca3"></span>
+  <span class="sw" style="background:#b98a6e" data-c="#b98a6e"></span>
+  <span class="sw" style="background:#7fa9a0" data-c="#7fa9a0"></span>
+  <input type="color" id="col" value="#c48bd9" style="width:40px;height:32px;padding:0;border:0">
+  <button class="btn" id="print">طباعة / حفظ PDF</button>
+  <button class="btn ghost" id="editBtn">تعديل النصوص: مغلق</button>
+ </div>
+ <div class="hint" style="margin-top:6px">اضغطي على أي مكان صورة في أعلى الوصفة لإضافة صورة من جهازك. الصور تحفظ في هذا المتصفح. الأماكن الفارغة تطبع بتصميم ملون مع أيقونة.</div>
+ <input type="file" id="file" accept="image/*" hidden>
+</div>
+<div class="pages" id="pages"></div>
+
+<script>
+{
+const $=id=>document.getElementById(id);
+const R=[
+ {s:"m",t:"ميلك شيك مزيونة بالتمر",e:["🥤","🍌"],tag:"الأكثر طلبا",
+  ing:["25 غ خلطة مزيونة","250 مل حليب كامل الدسم","موزة متوسطة","3 تمرات منزوعة النوى","1 م.ك زبدة فول سوداني","مكعبات ثلج حسب الرغبة"],
+  st:["ننقع التمر في قليل من الحليب الدافئ 5 دقائق حتى يطرى.","نضع كل المكونات في الخلاط.","نخلط دقيقة كاملة حتى يصبح القوام ناعما.","نقدمه فورا، ويمكن رش قليل من القرفة على الوجه."],
+  why:"مشروب سهل الشرب حتى مع ضعف الشهية، ويجمع البروتين والنشويات والدهون الصحية في كوب واحد.",nt:"يفضل بعد التمرين أو بين الوجبات وليس قبل الوجبة مباشرة."},
+ {s:"m",t:"أوفرنايت أوتس بمزيونة",e:["🥣","🍓"],
+  ing:["5 م.ك شوفان","25 غ خلطة مزيونة","150 مل حليب كامل الدسم","100 غ زبادي يوناني","1 م.ص بذور شيا","1 م.ص عسل","فاكهة للتزيين"],
+  st:["نخلط الشوفان مع مزيونة والشيا في برطمان.","نضيف الحليب والزبادي والعسل ونقلب جيدا.","نغلق البرطمان ونتركه في الثلاجة ليلة كاملة.","في الصباح نزينه بالفاكهة والمكسرات حسب الرغبة."],
+  why:"فطور جاهز من الليلة، فلا يوجد عذر لتخطي الإفطار.",nt:"يمكن تحضير 3 برطمانات مرة واحدة لثلاثة أيام."},
+ {s:"m",t:"بودنغ الشيا بمزيونة والمانجو",e:["🍮","🥭"],
+  ing:["2 م.ك بذور شيا","25 غ خلطة مزيونة","200 مل حليب كامل الدسم","1 م.ص عسل","نصف كوب مانجو مقطعة","1 م.ك جوز هند مبشور"],
+  st:["نذوب مزيونة في الحليب جيدا.","نضيف الشيا والعسل ونقلب ثم نتركها 10 دقائق ونقلب مرة ثانية.","نضعها في الثلاجة 4 ساعات على الأقل.","نضيف المانجو وجوز الهند عند التقديم."],
+  why:"حلى صحي غني بالدهون الصحية والألياف بدل الحلويات الفارغة.",nt:"يمكن استبدال المانجو بالموز أو التوت."},
+ {s:"m",t:"كرات الطاقة بمزيونة",e:["🟤","🥜"],tag:"تكفي 4 أيام",
+  ing:["100 غ خلطة مزيونة (حصة 25 غ لكل يوم)","150 غ تمر منزوع النوى","50 غ شوفان","3 م.ك زبدة فول سوداني","30 غ لوز مجروش","جوز هند مبشور للتغليف"],
+  st:["نفرم التمر في محضرة الطعام حتى يصبح عجينة.","نضيف الشوفان ومزيونة وزبدة الفول السوداني واللوز ونفرم حتى تتماسك.","نقسم الخليط إلى 4 أجزاء متساوية، ونشكل كل جزء إلى كرات صغيرة.","نغلفها بجوز الهند ونحفظها في الثلاجة."],
+  why:"سناك سهل الحمل للعمل أو الجامعة، وكل جزء فيه حصة مزيونة اليومية.",nt:"نأكل جزءا واحدا فقط في اليوم حتى لا نتجاوز حصة 25 غ."},
+ {s:"m",t:"بان كيك مزيونة",e:["🥞","🍯"],
+  ing:["1 بيضة","موزة صغيرة مهروسة","4 م.ك شوفان مطحون","25 غ خلطة مزيونة","50 مل حليب","رشة بيكنج باودر","للتقديم: 1 م.ك عسل و1 م.ك زبدة فول سوداني"],
+  st:["نخلط كل المكونات حتى نحصل على خليط متجانس.","نسخن مقلاة غير لاصقة على نار هادئة ونمسحها بقليل من الزبدة.","نصب ملعقة كبيرة من الخليط ونقلبها عند ظهور الفقاعات.","نقدمها مع العسل وزبدة الفول السوداني والفاكهة."],
+  why:"فطور محبب يحول حصة مزيونة إلى وجبة كاملة.",nt:"النار الهادئة مهمة حتى لا تحترق من الخارج وتبقى نيئة من الداخل."},
+ {s:"m",t:"لاتيه مزيونة الدافئ",e:["☕","🌿"],
+  ing:["25 غ خلطة مزيونة","250 مل حليب كامل الدسم","رشة قرفة","رشة هيل مطحون","1 م.ص عسل"],
+  st:["نسخن الحليب حتى يصبح دافئا وليس مغليا.","نضيف مزيونة تدريجيا مع الخفق المستمر.","نضيف القرفة والهيل والعسل.","نخفقه بخفاقة الحليب للحصول على رغوة."],
+  why:"بديل دافئ للميلك شيك في الأيام الباردة أو قبل النوم.",nt:"نضيف الخلطة للحليب الدافئ وليس المغلي."},
+
+ {s:"b",t:"شكشوكة بالجبن والأفوكادو",e:["🍳","🥑"],
+  ing:["3 بيضات","حبة طماطم كبيرة مفرومة","نصف بصلة و نصف فلفل ملون","1 م.ك زيت زيتون","30 غ جبن موزاريلا أو فيتا","نصف حبة أفوكادو","2 توست أسمر"],
+  st:["نشوح البصل والفلفل في زيت الزيتون.","نضيف الطماطم والبهارات ونتركها 5 دقائق.","نكسر البيض فوق الصلصة ونغطي المقلاة حتى ينضج.","نرش الجبن ونقدمها مع الأفوكادو والتوست."],
+  why:"بروتين عالي مع دهون صحية من الزيت والأفوكادو والجبن.",nt:"يمكن إضافة الكمون والبابريكا حسب الرغبة."},
+ {s:"b",t:"توست فرنسي بالعسل والمكسرات",e:["🍞","🍯"],
+  ing:["2 شريحة توست أسمر","1 بيضة","60 مل حليب","رشة قرفة","1 م.ص زبدة","1 م.ك عسل","15 غ مكسرات مجروشة","موزة أو فراولة"],
+  st:["نخفق البيض مع الحليب والقرفة.","نغمس شرائح التوست في الخليط من الجهتين.","نحمرها في مقلاة بالزبدة على نار متوسطة.","نزينها بالعسل والمكسرات والفاكهة."],
+  why:"طريقة سهلة لرفع سعرات الفطور بدون أن نشعر بالامتلاء.",nt:"يمكن استبدال العسل بزبدة الفول السوداني."},
+ {s:"b",t:"فول بالطحينة وزيت الزيتون",e:["🫘","🫒"],
+  ing:["6 م.ك فول مدمس","1 م.ك طحينة","1 م.ك زيت زيتون","عصير نصف ليمونة","فص ثوم مهروس","كمون وملح","طماطم وبقدونس","رغيف خبز عربي"],
+  st:["نسخن الفول مع قليل من مائه.","نهرسه مع الثوم والكمون والملح.","نضيف الطحينة والليمون ونقلب.","نسكب زيت الزيتون على الوجه ونزينه بالطماطم والبقدونس."],
+  why:"بروتين نباتي ونشويات مع دهون صحية ترفع السعرات بشكل طبيعي.",nt:"يقدم مع خضار طازجة وكوب لبن."},
+
+ {s:"l",t:"كبسة دجاج بالمكسرات",e:["🍗","🍚"],
+  ing:["180 غ دجاج","10 م.ك أرز","1 م.ك زيت زيتون أو سمن","بصل وطماطم","بهارات الكبسة","20 غ لوز وصنوبر محمص","1 م.ك زبيب","سلطة وزبادي للتقديم"],
+  st:["نحمر البصل في الزيت ثم نضيف الدجاج والبهارات.","نضيف الطماطم والماء ونطبخ الدجاج حتى ينضج.","نضيف الأرز المنقوع ونتركه على نار هادئة حتى يستوي.","نزين بالمكسرات المحمصة والزبيب."],
+  why:"المكسرات والزبيب يضيفان سعرات صحية بدون زيادة حجم الطبق.",nt:"الكميات لشخص واحد ويمكن مضاعفتها للعائلة."},
+ {s:"l",t:"مكرونة بالدجاج وصوص الجبن",e:["🍝","🧀"],
+  ing:["كوبان مكرونة مطبوخة","150 غ دجاج مقطع","1 م.ك زبدة","1 م.ك دقيق","200 مل حليب كامل الدسم","30 غ جبن موزاريلا أو شيدر","مشروم وبروكلي"],
+  st:["نشوح الدجاج مع الخضار ونتبله بالملح والفلفل.","نذوب الزبدة ونضيف الدقيق ونقلب دقيقة.","نضيف الحليب تدريجيا مع التحريك حتى يتكاثف، ثم نضيف الجبن.","نخلط الصوص مع المكرونة والدجاج."],
+  why:"صوص الحليب والجبن يضاعف سعرات الطبق مقارنة بالصلصة العادية.",nt:"يمكن رش جبن إضافي وإدخالها الفرن 10 دقائق."},
+ {s:"l",t:"سمك مشوي مع صوص الطحينة",e:["🐟","🍋"],
+  ing:["200 غ سمك","10 م.ك أرز أو برغل","1 م.ك زيت زيتون","ليمون وثوم وكمون","للصوص: 2 م.ك طحينة وليمون وماء وثوم","سلطة خضراء"],
+  st:["نتبل السمك بالزيت والليمون والثوم والكمون.","نشويه في الفرن 20 دقيقة على حرارة 200.","نخلط مكونات الصوص حتى يصبح كريميا.","نقدم السمك مع الأرز والصوص والسلطة."],
+  why:"بروتين خفيف على المعدة مع دهون أوميغا 3 وسعرات الطحينة.",nt:"يمكن استبدال السمك بالدجاج المشوي."},
+ {s:"l",t:"صينية كفتة بالبطاطس",e:["🥩","🥔"],
+  ing:["180 غ لحم مفروم","بصل وبقدونس مفروم","2 حبة بطاطس متوسطة","1 م.ك زيت زيتون","صلصة طماطم","بهارات مشكلة","خبز عربي للتقديم"],
+  st:["نخلط اللحم مع البصل والبقدونس والبهارات ونشكله أصابع.","نرتب الكفتة مع شرائح البطاطس في صينية.","نسكب صلصة الطماطم والزيت فوقها.","نخبزها في الفرن 35 إلى 40 دقيقة على حرارة 200."],
+  why:"وجبة غنية بالبروتين والحديد والنشويات تناسب العائلة كلها.",nt:"يمكن إضافة شرائح الطماطم والفلفل فوق الصينية."},
+ {s:"l",t:"برغل بالحمص واللحم",e:["🍲","🫘"],
+  ing:["10 م.ك برغل خشن","100 غ لحم مقطع","4 م.ك حمص مسلوق","1 م.ك زيت زيتون","بصل ومعجون طماطم","بهارات","زبادي للتقديم"],
+  st:["نحمر البصل ثم نضيف اللحم حتى يتغير لونه.","نضيف معجون الطماطم والبهارات والحمص.","نضيف البرغل والماء ونتركه على نار هادئة حتى يستوي.","نقدمه مع الزبادي."],
+  why:"البرغل والحمص يجمعان نشويات وبروتين وألياف بطاقة عالية.",nt:"يمكن استبدال اللحم بالدجاج."},
+
+ {s:"n",t:"ساندويش زبدة الفول السوداني والموز",e:["🥪","🍌"],
+  ing:["2 توست أسمر","1.5 م.ك زبدة فول سوداني","موزة مقطعة شرائح","1 م.ص عسل","رشة قرفة"],
+  st:["ندهن التوست بزبدة الفول السوداني.","نرتب شرائح الموز ونضيف العسل والقرفة.","نغلق الساندويش ويمكن تحميصه في المقلاة.","نقطعه ونقدمه مع كوب حليب."],
+  why:"من أسهل وأسرع السناكات الغنية بالسعرات المفيدة.",nt:"يمكن استبدال زبدة الفول السوداني بزبدة اللوز."},
+ {s:"n",t:"حمص بالطحينة والخبز",e:["🧆","🫓"],
+  ing:["6 م.ك حمص مهروس","1 م.ك طحينة","1 م.ك زيت زيتون","ليمون وثوم","رغيف خبز عربي","خضار للتغميس"],
+  st:["نخلط الحمص مع الطحينة والليمون والثوم.","نضيف قليلا من الماء البارد حتى يصبح ناعما.","نسكب زيت الزيتون على الوجه.","نقدمه مع الخبز والخضار."],
+  why:"سناك مشبع بالبروتين النباتي والدهون الصحية.",nt:"يمكن إضافة الصنوبر المحمص على الوجه."},
+ {s:"n",t:"تمر محشي باللوز والطحينة",e:["🌰","🍯"],
+  ing:["4 تمرات منزوعة النوى","4 حبات لوز","1 م.ك طحينة أو زبدة فول سوداني","رشة سمسم أو جوز هند"],
+  st:["نشق التمرات من الجنب.","نحشي كل تمرة بحبة لوز وقليل من الطحينة.","نرش السمسم أو جوز الهند.","نقدمها مع كوب حليب أو لبن."],
+  why:"لقمة صغيرة بسعرات عالية، مناسبة لمن تشعر بالشبع بسرعة.",nt:"تحفظ في الثلاجة 3 أيام."}
+];
+const SEC={m:["وصفات مزيونة","MUZUNA RECIPES","وصفات تدخل فيها حصة مزيونة اليومية 25 غراما"],b:["مقترح الإفطار","BREAKFAST","إفطار غني لا نتخطاه أبدا"],l:["مقترح الوجبة الأساسية","MAIN COURSE","وجبات كاملة للغداء والعشاء"],n:["السناك","SNACKS","وجبات خفيفة بين الوجبات الرئيسية"]};
+const TIPS=[["⏰","كل 3 ساعات","3 وجبات رئيسية و2 إلى 3 سناك. المعدة تعتاد تدريجيا على كميات أكبر."],["🥤","اشربي سعراتك","الميلك شيك والسموذي أسهل من الأكل عندما تكون الشهية ضعيفة."],["🫒","ملعقة زيت فوق كل طبق","ملعقة زيت زيتون واحدة تضيف حوالي 120 سعرة بدون أي زيادة في الحجم."],["🥛","كامل الدسم دائما","الحليب واللبنة والزبادي كاملة الدسم بدل قليلة الدسم."],["🍽️","البروتين والنشويات أولا","نبدأ الوجبة بالأرز والدجاج، والسلطة في الآخر حتى لا نشبع منها."],["💧","الماء بين الوجبات","الماء الكثير قبل الأكل يملأ المعدة ويقلل الكمية."],["🌙","سناك قبل النوم","كوب حليب مع تمرات أو زبادي بالعسل قبل النوم بساعة."],["🏋️","تمارين المقاومة","حتى تذهب الزيادة إلى العضل والقوام وليس إلى البطن فقط."]];
+const ADD=[["زيت زيتون","1 م.ك","120"],["زبدة فول سوداني","1 م.ك","95"],["طحينة","1 م.ك","90"],["مكسرات نية","30 غ","180"],["أفوكادو","نصف حبة","120"],["تمر","3 حبات","200"],["حليب كامل الدسم","كوب 250 مل","150"],["عسل","1 م.ك","60"],["جبن شيدر","30 غ","115"],["زبيب","2 م.ك","60"]];
+
+const foot=()=>`<div class="foot"><div class="brand">مزيونة</div><div class="h" data-hd></div></div>`;
+const P=[];
+P.push(`<section class="page solid"><div class="frame"></div><div class="circ">مزيونة</div><h1>مقترح الوصفات</h1><div class="en">DIET TIPS &amp; TRICKS</div><div class="sub">وصفات وأفكار لزيادة الوزن بطريقة صحية</div>${foot()}</section>`);
+P.push(`<section class="page"><div class="in"><h2 class="ttl">أفكار ذكية لزيادة الوزن</h2><p class="lead">الزيادة الصحية تأتي من الانتظام وليس من الأكل الكثير مرة واحدة</p>
+<div class="tips">${TIPS.map(t=>`<div class="tip"><div class="i">${t[0]}</div><div><b>${t[1]}</b><p>${t[2]}</p></div></div>`).join("")}</div></div>${foot()}</section>`);
+P.push(`<section class="page"><div class="in"><h2 class="ttl">إضافات ترفع السعرات</h2><p class="lead">نضيف واحدة أو اثنتين منها لكل وجبة بدون أن يكبر حجم الطبق</p>
+<table><thead><tr><th>الإضافة</th><th>الكمية</th><th>السعرات التقريبية</th></tr></thead><tbody>${ADD.map(a=>`<tr><td>${a[0]}</td><td>${a[1]}</td><td>${a[2]}</td></tr>`).join("")}</tbody></table>
+<div class="box"><b>مثال:</b> كوب حليب كامل الدسم مع 3 تمرات وملعقة زبدة فول سوداني يضيف حوالي 445 سعرة في سناك واحد.</div></div>${foot()}</section>`);
+let last="";
+R.forEach((r,i)=>{
+ if(r.s!==last){last=r.s;const s=SEC[r.s];P.push(`<section class="page solid"><div class="frame"></div><div class="circ">مزيونة</div><h1>${s[0]}</h1><div class="en">${s[1]}</div><div class="sub">${s[2]}</div>${foot()}</section>`)}
+ P.push(`<section class="page"><div class="hero">${[0,1].map(k=>`<div class="ph" data-k="r${i}_${k}"><span class="e">${r.e[k]}</span><span class="add">اضغطي لإضافة صورة</span><button class="x" title="حذف الصورة">×</button></div>`).join("")}</div>
+ <div class="tcard"><h2>${r.t}</h2>${r.tag?`<span class="tag">${r.tag}</span>`:""}</div>
+ <div class="rb"><div><h3>الطريقة</h3><ol>${r.st.map(x=>`<li>${x}</li>`).join("")}</ol></div><div><h3>المقادير لشخص</h3><ul>${r.ing.map(x=>`<li>${x}</li>`).join("")}</ul></div></div>
+ <div class="why"><b>ليش تساعد على زيادة الوزن؟</b> ${r.why}</div>
+ <div class="nt"><span>ملاحظات:</span> ${r.nt}</div>${foot()}</section>`);
+});
+$("pages").innerHTML=P.join("");
+
+/* photos stored in IndexedDB */
+let db=null;
+const open=indexedDB.open("muzuna_recipes",1);
+open.onupgradeneeded=()=>open.result.createObjectStore("ph");
+open.onsuccess=()=>{db=open.result;const tx=db.transaction("ph").objectStore("ph").openCursor();tx.onsuccess=e=>{const c=e.target.result;if(c){show(c.key,c.value);c.continue()}}};
+function show(k,src){const el=document.querySelector(`.ph[data-k="${k}"]`);if(!el)return;let im=el.querySelector("img");if(!src){if(im)im.remove();el.classList.remove("has");return}if(!im){im=document.createElement("img");el.prepend(im)}im.src=src;el.classList.add("has")}
+function save(k,v){try{const s=db.transaction("ph","readwrite").objectStore("ph");v?s.put(v,k):s.delete(k)}catch(e){}}
+let cur=null;
+$("pages").addEventListener("click",e=>{const ph=e.target.closest(".ph");if(!ph||ed)return;
+ if(e.target.classList.contains("x")){show(ph.dataset.k,null);save(ph.dataset.k,null);return}
+ cur=ph.dataset.k;$("file").value="";$("file").click()});
+$("file").addEventListener("change",()=>{const f=$("file").files[0];if(!f||!cur)return;const img=new Image();img.onload=()=>{const m=1400,sc=Math.min(1,m/Math.max(img.width,img.height)),c=document.createElement("canvas");c.width=img.width*sc;c.height=img.height*sc;c.getContext("2d").drawImage(img,0,0,c.width,c.height);const d=c.toDataURL("image/jpeg",.85);show(cur,d);save(cur,d);URL.revokeObjectURL(img.src)};img.src=URL.createObjectURL(f)});
+
+const hd=()=>{document.querySelectorAll("[data-hd]").forEach(e=>e.textContent=$("hd").value);try{localStorage.setItem("mzr_hd",$("hd").value)}catch(e){}};
+function setCol(c){document.documentElement.style.setProperty("--a",c);$("col").value=c;try{localStorage.setItem("mz_col",c)}catch(e){}}
+try{const h=localStorage.getItem("mzr_hd");if(h)$("hd").value=h;const c=localStorage.getItem("mz_col");if(c)setCol(c)}catch(e){}
+$("hd").addEventListener("input",hd);hd();
+document.querySelectorAll(".sw").forEach(s=>s.addEventListener("click",()=>setCol(s.dataset.c)));
+$("col").addEventListener("input",e=>setCol(e.target.value));
+let ed=false;
+$("editBtn").addEventListener("click",()=>{ed=!ed;document.querySelectorAll(".page").forEach(p=>p.contentEditable=ed);document.body.classList.toggle("edit",ed);$("editBtn").textContent="تعديل النصوص: "+(ed?"مفتوح":"مغلق")});
+$("print").addEventListener("click",()=>{try{window.print()}catch(e){}});
+}
+</script>
+</body>
+</html>

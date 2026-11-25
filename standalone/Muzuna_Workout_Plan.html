@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>مزيونة | البرنامج الرياضي</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Aref+Ruqaa:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--a:#c48bd9;--ink:#2b2233;--muted:#6f6478}
+:root{--a2:color-mix(in srgb,var(--a) 22%,#fff);--a3:color-mix(in srgb,var(--a) 9%,#fff);--ad:color-mix(in srgb,var(--a) 70%,#000)}
+*{box-sizing:border-box}
+body{margin:0;background:#ebe7ee;color:var(--ink);font:14px/1.6 Tajawal,Tahoma,Arial,sans-serif}
+.panel{position:sticky;top:0;z-index:9;background:#fff;border-bottom:3px solid var(--a);box-shadow:0 4px 18px #0001;padding:12px 18px;max-height:60vh;overflow:auto}
+.panel h2{margin:0 0 8px;font-size:17px;color:var(--ad)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px 12px;align-items:end}
+.panel label{display:flex;flex-direction:column;font-size:12px;color:var(--muted);gap:3px}
+.panel input,.panel select{font:inherit;font-size:15px;padding:7px 9px;border:1.5px solid #ddd;border-radius:8px;background:#fff}
+.panel input:focus,.panel select:focus{outline:2px solid var(--a);border-color:var(--a)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+.btn{font:inherit;font-weight:700;font-size:14px;padding:9px 16px;border-radius:9px;border:0;cursor:pointer;background:var(--a);color:#fff}
+.btn.ghost{background:var(--a3);color:var(--ad);border:1.5px solid var(--a2)}
+.sw{width:30px;height:30px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 1.5px #ccc;cursor:pointer}
+.hint{font-size:12px;color:var(--muted)}
+details{margin-top:10px;border:1px solid var(--a2);border-radius:10px;padding:6px 12px;background:var(--a3)}
+summary{cursor:pointer;font-weight:700;color:var(--ad)}
+.links{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px 12px;margin-top:8px}
+.links label{font-size:12px}
+.links input{font-size:13px;padding:5px 8px;direction:ltr}
+/* pages */
+.pages{padding:24px 0 60px;display:flex;flex-direction:column;align-items:center;gap:22px}
+.page{width:297mm;height:210mm;background:#fff;position:relative;overflow:hidden;box-shadow:0 6px 24px #0002;padding:14mm 16mm 22mm}
+.fband{position:absolute;bottom:0;left:0;right:0;height:16mm;background:var(--a3);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.15}
+.fband .brand{font-family:'Aref Ruqaa',serif;font-size:20px;color:var(--ad)}
+.fband .h{font-size:10.5px;color:var(--muted)}
+.wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Aref Ruqaa',serif;font-size:120px;color:var(--a);opacity:.05;pointer-events:none;white-space:nowrap}
+/* purple feature pages */
+.solid{background:var(--a);color:#fff;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center}
+.solid .ring{position:absolute;width:120mm;height:120mm;border-radius:50%;border:2px solid #ffffff55;box-shadow:0 0 0 14mm #ffffff10}
+.solid h1{position:relative;margin:0;font-size:52px;line-height:1.1;font-weight:800}
+.solid .en{position:relative;font-size:26px;font-weight:700;opacity:.95}
+.solid .logo{position:relative;font-family:'Aref Ruqaa',serif;font-size:40px;margin-bottom:4px}
+.solid .box{position:relative;margin-top:14px;background:#fff;color:var(--ink);border-radius:10px;padding:12px 20px;max-width:190mm;font-size:15px;font-weight:500;box-shadow:0 8px 24px #0002}
+.solid .fband{background:#ffffff18}.solid .fband .brand,.solid .fband .h{color:#fff}
+/* principles */
+.pr{display:grid;grid-template-columns:1fr 1fr;gap:30px 34px;margin-top:10px}
+.pi{display:flex;gap:14px;align-items:flex-start}
+.badge{flex:none;width:84px;height:84px;font-size:15px!important;border-radius:50%;background:var(--a);color:#fff;display:grid;place-items:center;font-size:12.5px;font-weight:800;text-align:center;line-height:1.2;box-shadow:0 0 0 5px var(--a2)}
+.pi p{margin:0;font-size:17px;font-weight:500;line-height:1.8}
+.pi b{color:var(--ad)}
+.ttl{color:var(--a);font-size:32px;font-weight:800;margin:0 0 12px}
+/* schedule */
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin-top:6px}
+.day{border:2px solid var(--a2);border-radius:14px;padding:16px 8px;text-align:center;min-height:95mm;justify-content:center;display:flex;flex-direction:column;align-items:center;gap:6px}
+.day.on{border-color:var(--a);background:var(--a3)}
+.day .dn{font-size:16px;font-weight:800;color:var(--ad)}
+.day svg{width:96px;height:96px}
+.day .dt{font-size:16px;font-weight:700}
+.day.off .dt{color:var(--muted)}
+/* day pages */
+.dhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.dhead .ttl{margin:0}
+.chip{background:var(--a2);color:var(--ad);font-weight:700;padding:6px 16px;border-radius:20px;font-size:15px}
+.dbody{display:grid;grid-template-columns:1fr 82mm;gap:18px;align-items:center}
+.ex{display:grid;grid-template-columns:56px 1fr auto;gap:14px;align-items:center;padding:9px 0;border-bottom:1px dashed var(--a2)}
+.num{width:50px;height:50px;font-size:23px!important;border-radius:50%;background:var(--a);color:#fff;display:grid;place-items:center;font-weight:800;font-size:19px}
+.exn{font-weight:800;font-size:19px;line-height:1.3}
+.exn small{display:block;font-weight:500;color:var(--muted);font-size:13px;direction:ltr;text-align:right}
+.exn a{font-size:11.5px;font-weight:700;color:var(--ad);margin-top:2px;display:inline-block}
+.sr{min-width:40mm;text-align:center;font-weight:800;color:var(--ad);background:var(--a3);border:1.5px solid var(--a2);border-radius:10px;padding:6px 12px;font-size:17px;white-space:nowrap}
+.sr small{display:block;font-weight:500;color:var(--muted);font-size:11px}
+.wu{font-size:14.5px;color:var(--muted);padding:5px 0}
+.wu b{color:var(--ink)}
+.ill{width:78mm;height:78mm;border-radius:50%;background:var(--a3);border:3px solid var(--a2);display:grid;place-items:center;margin:auto}
+.ill svg{width:72%;height:72%}
+.rest{display:flex;align-items:center;justify-content:center;gap:24px;height:100%}
+.rest .ill{margin:0;width:48mm;height:48mm}
+.rest h2{font-size:32px;margin:0}.rest h2 span{color:var(--a)}
+/* tables */
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{background:var(--a);color:#fff;padding:8px 6px;font-weight:700}
+td{border:1.5px solid var(--a2);padding:8px;text-align:center;height:46px}
+td.l{text-align:right;font-weight:700;background:var(--a3)}
+ul.dots{margin:4px 0;padding-right:18px;font-size:16px;line-height:1.8}
+@media screen{.edit .page{outline:2px dashed #0002}}
+@media (max-width:1180px){.pages{zoom:.6}}
+@page{size:A4 landscape;margin:0}
+@media print{body{background:#fff}.panel{display:none}.pages{padding:0;gap:0;zoom:1}.page{box-shadow:none;break-after:page}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<div class="panel">
+ <h2>بيانات البرنامج الرياضي للزبونة</h2>
+ <div class="grid">
+  <label>اسم الزبونة<input id="name" value="سارة"></label>
+  <label>مكان التمرين<select id="place"><option value="home">المنزل</option><option value="gym">النادي</option></select></label>
+  <label>المستوى<select id="lvl"><option value="0">مبتدئة</option><option value="1">متوسطة</option><option value="2">متقدمة</option></select></label>
+  <label>أيام التمرين بالأسبوع<select id="days"><option value="3">3 أيام</option><option value="4">4 أيام</option></select></label>
+  <label>نص التذييل<input id="hd" value="مزيونة | خلطة الأنوثة"></label>
+ </div>
+ <div class="row">
+  <span class="hint">لون التصميم:</span>
+  <span class="sw" style="background:#c48bd9" data-c="#c48bd9"></span>
+  <span class="sw" style="background:#d98ca3" data-c="#d98ca3"></span>
+  <span class="sw" style="background:#b98a6e" data-c="#b98a6e"></span>
+  <span class="sw" style="background:#7fa9a0" data-c="#7fa9a0"></span>
+  <input type="color" id="col" value="#c48bd9" style="width:40px;height:32px;padding:0;border:0">
+  <button class="btn" id="print">طباعة / حفظ PDF</button>
+  <button class="btn ghost" id="editBtn">تعديل النصوص: مغلق</button>
+ </div>
+ <details><summary>روابط فيديو التمارين (اختياري، تحفظ في هذا المتصفح وتظهر في كل خطة)</summary><div class="links" id="links"></div></details>
+</div>
+<div class="pages" id="pages"></div>
+
+<script>
+{
+const $=id=>document.getElementById(id);
+/* t: r = تكرار، e = لكل رجل أو يد، s = ثواني */
+const EX={
+ gb:["جسر الأرداف","Glute Bridge","r"],sglb:["جسر الأرداف برجل واحدة","Single Leg Glute Bridge","e"],
+ ht:["رفع الحوض بالبار أو الجهاز","Hip Thrust","r"],bss:["السكوات البلغاري","Bulgarian Split Squat","e"],
+ sumo:["سكوات سومو","Sumo Squat","r"],sq:["السكوات","Bodyweight Squat","r"],gsq:["سكوات بالدمبل","Goblet Squat","r"],
+ dk:["ركلة الأرداف للخلف","Donkey Kick","e"],ckb:["ركلة الأرداف بالكيبل","Cable Kickback","e"],
+ fh:["رفع الرجل الجانبي من وضع الكلب","Fire Hydrant","e"],clam:["تمرين المحارة بالمطاط","Clamshell","e"],
+ abd:["جهاز فتح الأرجل","Hip Abduction Machine","r"],rdl:["الرفعة الرومانية بالدمبل","Romanian Deadlift","r"],
+ rl:["اللانج للخلف","Reverse Lunge","e"],wl:["اللانج المتحرك بالدمبل","Walking Lunge","e"],lp:["جهاز ضغط الأرجل (القدمين للأعلى)","Leg Press","r"],
+ fp:["ضخ الضفدع","Frog Pumps","r"],pu:["الضغط على الركبتين","Knee Push Up","r"],sp:["ضغط الأكتاف بالدمبل","Shoulder Press","r"],
+ lr:["الرفرفة الجانبية","Lateral Raise","r"],row:["التجديف بالدمبل","Dumbbell Row","e"],lpd:["السحب العلوي","Lat Pulldown","r"],
+ cr:["التجديف بالكيبل","Seated Cable Row","r"],cp:["جهاز ضغط الصدر","Chest Press","r"],pl:["البلانك","Plank","s"],db:["الحشرة الميتة","Dead Bug","e"]
+};
+const PLAN={
+ LA:{t:"الأرداف والأفخاذ (أ)",ic:"low",home:["gb","bss","sumo","dk","fh"],gym:["ht","gsq","rdl","ckb","abd"]},
+ UP:{t:"الجزء العلوي والبطن",ic:"up",home:["pu","sp","lr","row","pl","db"],gym:["lpd","cr","sp","lr","cp","pl"]},
+ LB:{t:"الأرداف والأفخاذ (ب)",ic:"low",home:["sglb","rl","sq","fp","clam"],gym:["lp","bss","ht","wl","abd"]},
+ FB:{t:"الجسم كامل",ic:"full",home:["sq","gb","row","sp","pl"],gym:["gsq","ht","lpd","sp","pl"]}
+};
+const SCHED={3:["LA",0,"UP",0,"LB",0,0],4:["LA","UP",0,"LB","FB",0,0]};
+const LV=[{s:3,r:"12 إلى 15",t:"30",rest:"60 ث"},{s:4,r:"10 إلى 12",t:"45",rest:"90 ث"},{s:4,r:"8 إلى 10",t:"60",rest:"120 ث"}];
+const DN=["الأول","الثاني","الثالث","الرابع","الخامس","السادس","السابع"];
+const ICON={
+ low:`<svg viewBox="0 0 100 100"><path d="M28 12h44l4 30-8 50H56l-6-40-6 40H32l-8-50z" fill="#fff" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/><path d="M26 30q24-10 48 0l2 14q-26 10-52 0z" fill="var(--a)" opacity=".85"/><path d="M50 30v22" stroke="var(--ink)" stroke-width="2"/></svg>`,
+ up:`<svg viewBox="0 0 100 100"><path d="M38 14h24l4 10 18 8 4 30h-10l-4-20-6 4v40H32V46l-6-4-4 20H12l4-30 18-8z" fill="#fff" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/><circle cx="24" cy="36" r="9" fill="var(--a)" opacity=".85"/><circle cx="76" cy="36" r="9" fill="var(--a)" opacity=".85"/><path d="M40 52h20M40 62h20M40 72h20" stroke="var(--a)" stroke-width="3"/></svg>`,
+ full:`<svg viewBox="0 0 100 100"><circle cx="50" cy="14" r="8" fill="var(--a)"/><path d="M50 24v34M50 30l-20 14M50 30l20-10M50 58l-14 30M50 58l16 28" stroke="var(--ink)" stroke-width="6" stroke-linecap="round" fill="none"/><path d="M70 20l8-6M30 44l-6 6" stroke="var(--a)" stroke-width="8" stroke-linecap="round"/></svg>`,
+ rest:`<svg viewBox="0 0 100 100"><path d="M64 16a34 34 0 1 0 20 52A28 28 0 0 1 64 16z" fill="var(--a)"/><circle cx="74" cy="26" r="3" fill="var(--a)"/><circle cx="84" cy="42" r="2" fill="var(--a)"/></svg>`
+};
+let links={};try{links=JSON.parse(localStorage.getItem("mzw_links")||"{}")}catch(e){}
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const foot=()=>`<div class="fband"><div class="brand">مزيونة</div><div class="h" data-hd></div></div>`;
+
+function render(){
+ const place=$("place").value,lv=LV[+$("lvl").value],days=+$("days").value,name=esc($("name").value);
+ const sch=SCHED[days],P=[];
+ P.push(`<section class="page solid"><div class="ring"></div><div class="logo">مزيونة</div><h1>المقترح الرياضي</h1><div class="en">برنامج زيادة الوزن وإبراز القوام</div>
+ <div class="box">خاص بـ <b>${name}</b> &nbsp;|&nbsp; ${place==="home"?"تمارين منزلية":"تمارين النادي"} &nbsp;|&nbsp; ${days} أيام بالأسبوع &nbsp;|&nbsp; مستوى ${$("lvl").selectedOptions[0].text}</div>${foot()}</section>`);
+ P.push(`<section class="page"><div class="wm">مزيونة</div><h2 class="ttl">قبل ما نبدأ</h2><div class="pr">
+ <div class="pi"><div class="badge">الهدف</div><p>نبني <b>عضلا</b> في الأرداف والأفخاذ والأكتاف حتى يظهر القوام الأنثوي، والزيادة في الوزن تأتي من الأكل الصحي وليس من الدهون فقط.</p></div>
+ <div class="pi"><div class="badge">عدد<br>الأيام</div><p><b>${days} أيام</b> تمارين مقاومة بالأسبوع، مدة كل تمرين 40 إلى 50 دقيقة، والباقي راحة لأن العضل يكبر وقت الراحة وليس وقت التمرين.</p></div>
+ <div class="pi"><div class="badge">الكارديو</div><p>الكارديو <b>قليل جدا</b>: مشي خفيف 20 دقيقة مرة أو مرتين بالأسبوع فقط. الكارديو الكثير يحرق السعرات التي نحتاجها للزيادة.</p></div>
+ <div class="pi"><div class="badge">التدرج</div><p>كل أسبوع أو أسبوعين نزيد <b>الوزن أو عدد التكرارات</b> قليلا. آخر تكرارين في كل مجموعة يجب أن يكونا صعبين.</p></div>
+ <div class="pi"><div class="badge">الأكل</div><p>وجبة قبل التمرين بساعة إلى ساعتين، و<b>حصة مزيونة مع الحليب</b> بعد التمرين خلال ساعة. لا نتمرن على معدة فاضية.</p></div>
+ <div class="pi"><div class="badge">بصراحة</div><p>شكل الجسم يتأثر بالوراثة. التمرين يكبر العضل في المناطق المستهدفة، لكن لا يمكن توجيه الدهون إلى منطقة معينة. الالتزام 8 إلى 12 أسبوعا هو ما يصنع الفرق.</p></div>
+ </div>${foot()}</section>`);
+ P.push(`<section class="page"><h2 class="ttl">جدول الأسبوع</h2><div class="week">${sch.map((k,i)=>k?`<div class="day on"><div class="dn">اليوم ${DN[i]}</div>${ICON[PLAN[k].ic]}<div class="dt">${PLAN[k].t}</div></div>`:`<div class="day off"><div class="dn">اليوم ${DN[i]}</div>${ICON.rest}<div class="dt">راحة${i===2||i===5?"<br><small>أو مشي خفيف 20 دقيقة</small>":""}</div></div>`).join("")}</div>
+ <ul class="dots" style="margin-top:14px"><li>أيام الراحة لغرض الاستشفاء العضلي، فالعضل يكبر وقت الراحة. لا ننسى حصة مزيونة ووجباتنا كاملة حتى في أيام الراحة.</li><li>نقدر نغير أيام الراحة حسب ظروفنا، بشرط ما نمرن نفس العضلة يومين ورا بعض.</li><li>الراحة بين المجموعات: <b>${lv.rest}</b>. عدد المجموعات والتكرارات مكتوب بجانب كل تمرين.</li></ul>${foot()}</section>`);
+ P.push(`<section class="page"><h2 class="ttl">الإحماء والتبريد</h2><div class="pr">
+ <div class="pi"><div class="badge">قبل<br>التمرين</div><p><b>5 إلى 8 دقائق إحماء:</b> قفز خفيف أو مشي في المكان دقيقتين، ثم دوران الحوض، 10 سكوات بدون وزن، 10 جسر أرداف، و10 لانج خفيف. الهدف تسخين المفاصل وتنشيط الأرداف.</p></div>
+ <div class="pi"><div class="badge">بعد<br>التمرين</div><p><b>5 دقائق إطالة:</b> إطالة الأرداف (وضع الحمامة)، إطالة الفخذ الأمامي والخلفي، إطالة الظهر (وضع الطفل). نثبت كل إطالة 30 ثانية ونتنفس بهدوء.</p></div>
+ <div class="pi"><div class="badge">الأداء</div><p>الحركة الصحيحة أهم من الوزن الثقيل. نشد الأرداف في أعلى كل حركة لثانية، ونحافظ على استقامة الظهر.</p></div>
+ <div class="pi"><div class="badge">متى<br>نوقف</div><p>أي ألم حاد في المفاصل أو الظهر نوقف التمرين فورا. الإحساس بالتعب والحرقان في العضل طبيعي.</p></div>
+ </div>${foot()}</section>`);
+ sch.forEach((k,i)=>{
+  if(!k)return;
+  const p=PLAN[k];
+  P.push(`<section class="page"><div class="wm">مزيونة</div><div class="dhead"><h2 class="ttl">اليوم ${DN[i]}: ${p.t}</h2><span class="chip">${lv.s} مجموعات | راحة ${lv.rest}</span></div>
+  <div class="dbody"><div><div class="wu"><b>إحماء:</b> 5 إلى 8 دقائق كما في صفحة الإحماء</div>
+  ${p[place].map((id,j)=>{const e=EX[id],u=links[id];const sr=e[2]==="s"?`${lv.t} ث`:lv.r;
+   return `<div class="ex"><div class="num">${j+1}</div><div class="exn">${e[0]}<small>${e[1]}</small>${u?`<a href="${esc(u)}">شاهدي الفيديو</a>`:""}</div><div class="sr">${sr}<small>${e[2]==="e"?"تكرار لكل جهة":e[2]==="s"?"ثبات":"تكرار"}، ${lv.s} مجموعات</small></div></div>`}).join("")}
+  <div class="wu"><b>تبريد:</b> 5 دقائق إطالة، ثم حصة مزيونة مع الحليب خلال ساعة</div></div>
+  <div class="ill">${ICON[p.ic]}</div></div>${foot()}</section>`);
+ });
+ const used=[...new Set(sch.filter(Boolean).flatMap(k=>PLAN[k][place]))].filter(id=>EX[id][2]!=="s").slice(0,8);
+ P.push(`<section class="page"><h2 class="ttl">متابعة الأوزان والتقدم</h2><table><thead><tr><th style="width:30%">التمرين</th><th>الأسبوع 1</th><th>الأسبوع 2</th><th>الأسبوع 3</th><th>الأسبوع 4</th></tr></thead><tbody>
+ ${used.map(id=>`<tr><td class="l">${EX[id][0]}</td><td></td><td></td><td></td><td></td></tr>`).join("")}</tbody></table>
+ <p class="hint" style="font-size:13px">نكتب الوزن المستخدم وعدد التكرارات، مثال: 5 كجم × 12. إذا كانت كل المجموعات سهلة نزيد الوزن الأسبوع الجاي.</p>${foot()}</section>`);
+ $("pages").innerHTML=P.join("");
+ document.querySelectorAll("[data-hd]").forEach(e=>e.textContent=$("hd").value);
+ if(ed)document.querySelectorAll(".page").forEach(p=>p.contentEditable=true);
+ try{localStorage.setItem("mzw_form",JSON.stringify({name:$("name").value,place:$("place").value,lvl:$("lvl").value,days:$("days").value,hd:$("hd").value}))}catch(e){}
+}
+function setCol(c){document.documentElement.style.setProperty("--a",c);$("col").value=c;try{localStorage.setItem("mz_col",c)}catch(e){}}
+$("links").innerHTML=Object.entries(EX).map(([id,e])=>`<label>${e[0]}<input data-id="${id}" placeholder="https://youtu.be/..." value="${esc(links[id]||"")}"></label>`).join("");
+$("links").addEventListener("input",e=>{const id=e.target.dataset.id;if(!id)return;const v=e.target.value.trim();if(/^https?:\/\//.test(v))links[id]=v;else delete links[id];try{localStorage.setItem("mzw_links",JSON.stringify(links))}catch(x){}render()});
+try{const s=JSON.parse(localStorage.getItem("mzw_form")||"null");if(s)for(const k in s)if($(k))$(k).value=s[k];const c=localStorage.getItem("mz_col");if(c)setCol(c)}catch(e){}
+let ed=false;
+["name","place","lvl","days","hd"].forEach(k=>$(k).addEventListener("input",render));
+document.querySelectorAll(".sw").forEach(s=>s.addEventListener("click",()=>setCol(s.dataset.c)));
+$("col").addEventListener("input",e=>setCol(e.target.value));
+$("editBtn").addEventListener("click",()=>{ed=!ed;document.querySelectorAll(".page").forEach(p=>p.contentEditable=ed);document.body.classList.toggle("edit",ed);$("editBtn").textContent="تعديل النصوص: "+(ed?"مفتوح":"مغلق")});
+$("print").addEventListener("click",()=>{const t=document.title;document.title="برنامج مزيونة الرياضي - "+$("name").value;try{window.print()}catch(e){}setTimeout(()=>document.title=t,800)});
+render();
+}
+</script>
+</body>
+</html>

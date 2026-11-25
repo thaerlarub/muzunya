@@ -1,0 +1,310 @@
+<title>Muzuna Mascot Styles</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* LAYOUT: a feeding demo up top, a control strip, then one row of four mascots per art style */
+:root{
+ --bg:#f6f1f8;--surface:#ffffff;--ink:#2b2233;--muted:#6a5f73;--line:#e6dbeb;
+ --accent:#c48bd9;--accent-ink:#7a4f8a;--stage:#f1e4f6;--stage2:#faf5fb;--chip:#f4ebf7;
+ --display:"Aref Ruqaa","Amiri","Traditional Arabic",Georgia,serif;
+ --body:"Tajawal","Segoe UI",Tahoma,system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b161f;--surface:#251f2a;--ink:#f2ebf5;--muted:#b9adc1;--line:#3a3141;--accent:#c48bd9;--accent-ink:#e1c2ee;--stage:#30263a;--stage2:#2a2231;--chip:#33293b;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1b161f;--surface:#251f2a;--ink:#f2ebf5;--muted:#b9adc1;--line:#3a3141;--accent:#c48bd9;--accent-ink:#e1c2ee;--stage:#30263a;--stage2:#2a2231;--chip:#33293b;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 48px}
+.wrap{max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+header{display:flex;flex-direction:column;gap:6px}
+.brand{font-family:var(--display);font-size:44px;line-height:1;color:var(--accent-ink)}
+h1{font-size:26px;margin:0;text-wrap:balance}
+.lead{margin:0;color:var(--muted);max-width:62ch}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px}
+.controls{display:flex;flex-direction:column;gap:16px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.crow{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center}
+.lbl{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.grow{display:flex;align-items:center;gap:12px;flex:1;min-width:240px}
+.grow input{flex:1;accent-color:var(--accent);min-height:44px}
+.kg{font-variant-numeric:tabular-nums;font-weight:800;color:var(--accent-ink);min-width:64px}
+.chips,.seg{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid var(--line);background:var(--chip);color:var(--ink);border-radius:12px;padding:6px 12px;font:inherit;font-size:14px;cursor:pointer;min-height:44px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;line-height:1.25;transition:transform .15s ease-out,border-color .15s,background .15s}
+.chip small{color:var(--muted);font-size:11.5px}
+.chip:active{transform:scale(.96)}
+.chip[aria-pressed="true"]{border-color:var(--accent);background:var(--surface);box-shadow:inset 0 0 0 1.5px var(--accent)}
+.btn{border:0;background:var(--accent);color:#fff;font:inherit;font-weight:800;border-radius:12px;padding:10px 18px;min-height:44px;cursor:pointer;transition:transform .15s ease-out}
+.btn:active{transform:translateY(2px) scale(.97)}
+.btn.ghost{background:transparent;color:var(--accent-ink);border:1.5px solid var(--line)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--accent-ink);outline-offset:2px}
+section.style{display:flex;flex-direction:column;gap:12px}
+.shead{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+.shead h2{margin:0;font-size:20px}
+.shead .letter{font-weight:800;color:#fff;background:var(--accent-ink);border-radius:8px;padding:0 9px;font-size:15px}
+.shead p{margin:0;color:var(--muted);font-size:14px;flex-basis:100%}
+.row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media(max-width:640px){.row{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:10px;display:flex;flex-direction:column;gap:8px;cursor:pointer;transition:transform .2s ease-out,border-color .2s}
+.card:hover{transform:translateY(-2px);border-color:var(--accent)}
+.stage{position:relative;aspect-ratio:1;max-width:100%;border-radius:12px;background:radial-gradient(circle at 50% 38%,var(--stage2),var(--stage));overflow:hidden}
+.fig{position:absolute;inset:4%;transform-origin:50% 92%}
+.fig svg,.fig canvas{width:100%;height:100%;display:block}
+.fig canvas{image-rendering:pixelated;image-rendering:crisp-edges}
+.shadow{position:absolute;left:50%;bottom:5%;width:42%;height:5%;border-radius:50%;background:#3b294733;transform:translateX(-50%)}
+.s-sticker .fig svg{filter:drop-shadow(0 2px 2px #3b294740)}
+.nm{display:flex;flex-direction:column;align-items:center;line-height:1.2}
+.nm b{font-size:18px}
+.nm span{font-size:12.5px;color:var(--muted)}
+.petal{position:absolute;left:50%;top:45%;width:9px;height:12px;border-radius:60% 60% 60% 60%/80% 80% 40% 40%;pointer-events:none;opacity:0}
+.note{font-size:13px;color:var(--muted);margin:0}
+/* feeding demo */
+.demo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start}
+@media(max-width:720px){.demo{grid-template-columns:minmax(0,1fr)}}
+.demo .stage{width:100%;max-width:380px;margin:0 auto}
+.dside{display:flex;flex-direction:column;gap:14px;min-width:0}
+.dhead{display:flex;flex-direction:column;gap:4px}
+.dhead h2{margin:0;font-size:20px}
+.dhead p{margin:0;color:var(--muted);font-size:14px}
+.seg button{border:1.5px solid var(--line);background:var(--chip);color:var(--ink);border-radius:10px;padding:6px 12px;font:inherit;font-size:14px;min-height:40px;cursor:pointer}
+.seg button[aria-pressed="true"]{border-color:var(--accent);background:var(--surface);box-shadow:inset 0 0 0 1.5px var(--accent);font-weight:700}
+.today{display:flex;align-items:center;gap:14px}
+.ring{width:64px;height:64px;flex:none}
+.ring circle{fill:none;stroke-width:7}
+.ring .tr{stroke:var(--line)}
+.ring .fl{stroke:var(--accent);stroke-linecap:round;transform:rotate(-90deg);transform-origin:50% 50%;transition:stroke-dashoffset .45s cubic-bezier(.3,.7,.4,1)}
+.today b{font-size:22px;font-variant-numeric:tabular-nums;color:var(--accent-ink)}
+.today span{display:block;font-size:13px;color:var(--muted)}
+.ticks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.tick{position:relative;display:flex;align-items:center;gap:10px;min-height:48px;padding:6px 12px;border:1.5px solid var(--line);border-radius:12px;cursor:pointer;background:var(--stage2);transition:border-color .2s,background .2s}
+.tick:hover{border-color:var(--accent)}
+.tick input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.tick .box{width:26px;height:26px;border-radius:8px;border:2px solid var(--accent);display:grid;place-items:center;flex:none;transition:background .2s ease-out,transform .2s ease-out}
+.tick .box svg{width:16px;height:16px}
+.tick .box path{fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:20;stroke-dashoffset:20;transition:stroke-dashoffset .25s ease-out .05s}
+.tick input:checked~.box{background:var(--accent)}
+.tick input:checked~.box path{stroke-dashoffset:0}
+.tick input:focus-visible~.box{outline:3px solid var(--accent-ink);outline-offset:2px}
+.tick input:checked~.txt{color:var(--muted)}
+.tick:has(input:checked){background:var(--surface)}
+.ficon{width:28px;height:28px;flex:none}
+.txt{font-weight:700}
+.food{position:fixed;left:0;top:0;width:36px;height:36px;z-index:50;pointer-events:none}
+.heart{position:absolute;width:12%;aspect-ratio:1;pointer-events:none;opacity:0}
+@media (prefers-reduced-motion:no-preference){
+ .fig.idle{animation:bob 2.8s ease-in-out infinite;animation-delay:var(--d,0s)}
+ .s-pixel .fig.idle{animation-timing-function:steps(3,jump-none)}
+ @keyframes bob{0%,100%{transform:translateY(0) scale(1,1)}50%{transform:translateY(-2.5%) scale(.99,1.015)}}
+ .fig.hop{animation:hop .75s cubic-bezier(.3,.7,.4,1)}
+ @keyframes hop{0%{transform:none}18%{transform:scale(1.08,.88)}45%{transform:translateY(-16%) scale(.94,1.08)}72%{transform:translateY(0) scale(1.06,.93)}86%{transform:scale(.98,1.02)}100%{transform:none}}
+ .fig.yum{animation:yum .5s cubic-bezier(.3,.7,.4,1)}
+ @keyframes yum{0%{transform:none}30%{transform:scale(1.07,.92)}60%{transform:scale(.97,1.04)}100%{transform:none}}
+ .tick input:checked~.box{animation:pop .3s ease-out}
+ @keyframes pop{40%{transform:scale(1.25)}100%{transform:scale(1)}}
+ .petal{animation:petal .95s cubic-bezier(.2,.7,.3,1) forwards}
+ @keyframes petal{0%{opacity:0;transform:translate(-50%,-50%) rotate(0) scale(.4)}15%{opacity:1}100%{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) rotate(var(--r)) scale(1)}}
+ .heart{animation:rise .9s ease-out forwards}
+ @keyframes rise{0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}25%{opacity:1;transform:translate(-50%,-90%) scale(1.1)}100%{opacity:0;transform:translate(-50%,-260%) scale(.9)}}
+}
+</style>
+
+<div class="wrap">
+ <header>
+  <div class="brand" lang="ar" dir="rtl">مزيونة</div>
+  <h1>Pick a mascot style</h1>
+  <p class="lead">Each customer picks one of four mascots. It grows rounder as she gains weight, wears the badges she earns, and eats every meal she ticks. Try the feeding demo first, then compare the three art styles below.</p>
+ </header>
+
+ <section class="panel demo" aria-label="Feeding demo">
+  <div class="stage" id="dstage"><div class="shadow"></div><div class="fig idle"></div></div>
+  <div class="dside">
+   <div class="dhead"><h2>Tick to feed</h2><p>Her meal checklist for today. Each tick throws that food to the mascot. Finish all seven for a celebration.</p></div>
+   <div class="seg" id="dMascot" aria-label="Mascot"></div>
+   <div class="seg" id="dStyle" aria-label="Style"></div>
+   <div class="today"><svg class="ring" viewBox="0 0 64 64" aria-hidden="true"><circle class="tr" cx="32" cy="32" r="26"/><circle class="fl" id="ring" cx="32" cy="32" r="26" stroke-dasharray="163.4" stroke-dashoffset="163.4"/></svg><div><b id="cnt">0 / 7</b><span>meals today</span></div><button class="btn ghost" id="dReset" style="margin-inline-start:auto">Reset day</button></div>
+   <ul class="ticks" id="ticks" dir="rtl" lang="ar"></ul>
+  </div>
+ </section>
+
+ <div class="panel controls" role="group" aria-label="Preview controls">
+  <div class="crow">
+   <span class="lbl" id="gl">Weight gained</span>
+   <div class="grow"><input id="g" type="range" min="0" max="6" step="1" value="2" aria-labelledby="gl"><span class="kg" id="kg">+2 kg</span></div>
+   <button class="btn" id="party">Celebrate all</button>
+   <button class="btn ghost" id="allOn">All badges</button>
+  </div>
+  <div class="crow"><span class="lbl">Badges worn</span><div class="chips" id="chips"></div></div>
+ </div>
+
+ <section class="style s-pixel"><div class="shead"><span class="letter">A</span><h2>Pixel art</h2><p>Crisp game sprites, the same family as the daycare mascot. Growth shows in clear steps.</p></div><div class="row" data-style="pixel"></div></section>
+ <section class="style s-soft"><div class="shead"><span class="letter">B</span><h2>Soft vector</h2><p>Smooth rounded shapes with tonal outlines and a light sheen. Growth is smooth.</p></div><div class="row" data-style="soft"></div></section>
+ <section class="style s-sticker"><div class="shead"><span class="letter">C</span><h2>Sticker</h2><p>Flat colours with a white die-cut edge, like a sticker sheet. Reads well when small.</p></div><div class="row" data-style="sticker"></div></section>
+ <p class="note">Mock-up only. Final art, poses (wave, sleepy, celebrate) and every badge item get drawn properly in the app. Workout ticks would get their own reaction, such as a flex or a stretch.</p>
+</div>
+
+<script>
+{
+const $=id=>document.getElementById(id);
+const INK="#3b2947", SKIN="#f6d3bd", PINK="#f2a7bd", ROSE="#e2729a", GOLD="#e9b949", SAGE="#7fa9a0", MOUTH="#7d2f4a";
+const E=(cx,cy,rx,ry,f,o={})=>({e:[cx,cy,rx,ry],f,...o});
+const P=(p,f,o={})=>({p,f,...o});
+const D={d:true};
+
+/* ---- the four characters. s = {blink, open, full}. Each returns body parts (pre), head parts (post) and anchors ---- */
+function girl(g,s){const k=1+.45*g,bw=17*k,c=s.full?1.3:0,ey=s.blink?.35:2.3;return{
+ pre:[E(50-(8+3*g),90,5,4,"#7a4f8a"),E(50+(8+3*g),90,5,4,"#7a4f8a"),E(50-bw+1,70,4.5,8.5,"#b47bc9",{rot:18}),E(50+bw-1,70,4.5,8.5,"#b47bc9",{rot:-18}),E(50,72,bw,19+2*g,"#c48bd9"),E(50,79,bw*.55,3,"#d9b0e6",D)],
+ post:[E(50,38,20+1.5*g,21,"#8e5aa3",{head:1}),E(50,41,13+1.6*g+c*.6,13.5+.6*g,SKIN),E(42-g-c*.4,46,3+g+c,2+c*.5,PINK,{d:1,o:.85}),E(58+g+c*.4,46,3+g+c,2+c*.5,PINK,{d:1,o:.85}),
+  E(44,41,1.7,ey,INK,D),E(56,41,1.7,ey,INK,D),s.open?E(50,48.8,3.2,3,MOUTH,D):E(50,48,2.3,1.2,"#c0607a",D)],
+ a:{top:[50,18],side:[64,24],eyes:[[44,41],[56,41]],neck:[50,56,16*(1+.3*g)],mouth:[50,48.5]}}}
+function kitten(g,s){const k=1+.45*g,bw=16*k,F="#e6d9ee",F2="#cbb6db",c=s.full?1.3:0,ey=s.blink?.35:2.5;return{
+ pre:[E(50+bw*.95,72,4,13,F2,{rot:35}),E(50-(8+3*g),90,5,4,F2),E(50+(8+3*g),90,5,4,F2),E(50,72,bw,18+2*g,F),E(50,76,bw*.56,11,"#fbf6fd",D)],
+ post:[P([[33,32],[36,11],[48,24]],F),P([[67,32],[64,11],[52,24]],F),P([[36.5,27],[37.5,16],[44,24]],PINK,D),P([[63.5,27],[62.5,16],[56,24]],PINK,D),
+  E(50,39,18+1.6*g+c*.6,16+.6*g,F,{head:1}),E(41-g-c*.4,45,3+g+c,1.9+c*.5,PINK,{d:1,o:.8}),E(59+g+c*.4,45,3+g+c,1.9+c*.5,PINK,{d:1,o:.8}),
+  E(43.5,39,1.8,ey,INK,D),E(56.5,39,1.8,ey,INK,D),...(s.open?[E(50,48.6,2.8,2.6,MOUTH,D)]:[]),P([[48,44],[52,44],[50,46.2]],"#d9708e",D)],
+ a:{top:[50,23],side:[63,23],eyes:[[43.5,39],[56.5,39]],neck:[50,55,16*(1+.3*g)],mouth:[50,48]}}}
+function bunny(g,s){const k=1+.45*g,bw=16*k,F="#f5eef8",F2="#e4d6ea",c=s.full?1.3:0,ey=s.blink?.35:2.5;return{
+ pre:[E(50-(9+3*g),91,6.5,3.6,F2),E(50+(9+3*g),91,6.5,3.6,F2),E(50,73,bw,18+2*g,F),E(50,77,bw*.56,11,"#fffbff",D)],
+ post:[E(42,16,5.2,15,F,{rot:-8}),E(58,16,5.2,15,F,{rot:8}),E(42,17,2.5,11,PINK,{rot:-8,d:1}),E(58,17,2.5,11,PINK,{rot:8,d:1}),
+  E(50,41,17+1.6*g+c*.6,15+.6*g,F,{head:1}),E(41-g-c*.4,46,3+g+c,1.9+c*.5,PINK,{d:1,o:.8}),E(59+g+c*.4,46,3+g+c,1.9+c*.5,PINK,{d:1,o:.8}),
+  E(44,40,1.8,ey,INK,D),E(56,40,1.8,ey,INK,D),...(s.open?[E(50,49.4,2.8,2.6,MOUTH,D)]:[]),E(50,45,1.8,1.3,"#d9708e",D),P([[48.6,47],[51.4,47],[51.4,49.6],[48.6,49.6]],"#ffffff",D)],
+ a:{top:[50,27],side:[61,28],eyes:[[44,40],[56,40]],neck:[50,57,16*(1+.3*g)],mouth:[50,49]}}}
+function camel(g,s){const k=1+.3*g,T="#dcb488",T2="#c49a6c",L="#ecd2b0",c=s.full?1.2:0;return{
+ pre:[E(68,85,3.4,9,T2),E(73,84,3.4,9,T2),E(41,85,3.4,9,T2),E(47,84,3.4,9,T2),E(77+3*g,66,2.2,7,T2,{rot:-20}),
+  E(58,57-2*g,10+4*g,9+4*g,T),E(56,70,21*k,14+3*g,T),E(56,74,14*k,6,L,D),E(36,53,6.5,13,T,{rot:16})],
+ post:[E(37,28,2.6,4.2,T2,{rot:30}),E(30,36,11,9,T,{head:1}),E(21,40,7.5+c*.5,6+c*.4,L),E(17,39,1,.7,INK,D),E(34,40,2.6+c,1.7+c*.5,PINK,{d:1,o:.85}),
+  E(29,34,1.8,s.blink?.35:2.5,INK,D),s.open?E(20.5,44,2.8,2.3,MOUTH,D):E(21,43.5,2.2,.9,"#a8755a",D)],
+ a:{top:[31,26],side:[39,27],eyes:[[29,34]],neck:[37,50,11],mouth:[20.5,44]}}}
+const MASCOTS=[{id:"girl",ar:"مزيونة",en:"Muzuna girl",f:girl},{id:"kitten",ar:"قطوة",en:"Kitten",f:kitten},{id:"bunny",ar:"أرنوبة",en:"Bunny",f:bunny},{id:"camel",ar:"حوار",en:"Baby camel",f:camel}];
+const STYLES=[{id:"pixel",en:"A. Pixel"},{id:"soft",en:"B. Soft vector"},{id:"sticker",en:"C. Sticker"}];
+
+/* ---- wearables, one per badge ---- */
+const WEAR=[{id:"bow",badge:"First week",item:"Bow"},{id:"necklace",badge:"First kg gained",item:"Pearls"},{id:"scarf",badge:"7-day streak",item:"Scarf"},
+ {id:"glasses",badge:"Perfect week",item:"Sunglasses"},{id:"flower",badge:"Halfway to goal",item:"Flower"},{id:"crown",badge:"Journey finished",item:"Crown"}];
+const on=new Set(["bow","necklace"]);
+function neckWear(a){const[x,y,w]=a.neck,out=[];
+ if(on.has("scarf"))out.push(E(x,y,w*.62,3.8,SAGE),P([[x+w*.18,y],[x+w*.46,y+12],[x+w*.12,y+12]],"#6a9289"));
+ if(on.has("necklace"))for(let t=-2;t<=2;t++)out.push(E(x+t*w/5.2,y+3.2-t*t*.55,1.7,1.7,"#fff8ef"));
+ return out}
+function headWear(a){const out=[];const[tx,ty]=a.top;
+ if(on.has("glasses")){const e=a.eyes;e.forEach(([x,y])=>out.push(E(x,y,4.2,3.2,"#2e2236"),E(x-1.4,y-1.1,1.2,.8,"#ffffff",{d:1,o:.55})));
+  if(e.length>1)out.push(P([[e[0][0]+3.5,e[0][1]-.8],[e[1][0]-3.5,e[1][1]-.8],[e[1][0]-3.5,e[1][1]+.6],[e[0][0]+3.5,e[0][1]+.6]],"#2e2236",D))}
+ if(on.has("flower")){const[x,y]=a.side;for(let i=0;i<5;i++){const t=i*1.2566-1.57;out.push(E(x+Math.cos(t)*3.2,y+Math.sin(t)*3.2,2.7,2.7,"#fbd3e0"))}out.push(E(x,y,1.8,1.8,GOLD,D))}
+ if(on.has("crown"))out.push(P([[tx-9,ty],[tx-9,ty-8],[tx-4.5,ty-3.5],[tx,ty-10],[tx+4.5,ty-3.5],[tx+9,ty-8],[tx+9,ty]],GOLD),E(tx,ty-3,1.5,1.5,ROSE,D),E(tx-5.5,ty-2,1,1,SAGE,D),E(tx+5.5,ty-2,1,1,SAGE,D));
+ if(on.has("bow")){const bx=on.has("crown")?tx-11:tx,by=on.has("crown")?ty+3:ty;out.push(P([[bx,by],[bx-7,by-4.5],[bx-7,by+4.5]],ROSE),P([[bx,by],[bx+7,by-4.5],[bx+7,by+4.5]],ROSE),E(bx,by,2.1,2.1,"#c4567e"))}
+ return out}
+function build(m,g,s){const r=m.f(g,s);return[...r.pre,...neckWear(r.a),...r.post,...headWear(r.a)]}
+
+/* ---- colour helpers ---- */
+const rgb=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
+const hex=a=>"#"+a.map(v=>Math.max(0,Math.min(255,Math.round(v))).toString(16).padStart(2,"0")).join("");
+const mixc=(h,t,p)=>{const a=rgb(h),b=rgb(t);return hex(a.map((v,i)=>v*(1-p)+b[i]*p))};
+
+/* ---- renderer A: rasterise the same shapes to a 40 x 40 sprite with outline and two-tone shading ---- */
+function inside(pr,x,y,minR){
+ if(pr.e){let[cx,cy,rx,ry]=pr.e;if(minR){rx=Math.max(rx,minR);ry=Math.max(ry,minR*.8)}const t=(pr.rot||0)*Math.PI/180,dx=x-cx,dy=y-cy;
+  const u=dx*Math.cos(t)+dy*Math.sin(t),v=-dx*Math.sin(t)+dy*Math.cos(t),nu=u/rx,nv=v/ry;return nu*nu+nv*nv<=1?[nu,nv]:null}
+ const p=pr.p;let c=false;for(let i=0,j=p.length-1;i<p.length;j=i++){const[xi,yi]=p[i],[xj,yj]=p[j];if((yi>y)!==(yj>y)&&x<(xj-xi)*(y-yi)/(yj-yi)+xi)c=!c}return c?[0,0]:null}
+function pixel(cv,prims){const N=40,s=100/N,n=N*N,col=new Array(n).fill(null),z=new Int16Array(n).fill(-1),maj=new Uint8Array(n);
+ prims.forEach((pr,k)=>{for(let j=0;j<N;j++)for(let i=0;i<N;i++){const h=inside(pr,(i+.5)*s,(j+.5)*s,pr.d?1.5:0);if(!h)continue;const q=j*N+i;
+  let c=pr.f;if(!pr.d&&pr.e){const sh=h[0]*.45+h[1]*.9;if(sh>.62)c=mixc(c,"#3b2947",.16);else if(pr.head&&-h[0]*.5-h[1]*.8>.72)c=mixc(c,"#ffffff",.35)}
+  col[q]=c;z[q]=k;maj[q]=pr.d?0:1}});
+ const ctx=cv.getContext("2d"),img=ctx.createImageData(N,N),[ir,ig,ib]=rgb(INK);
+ for(let j=0;j<N;j++)for(let i=0;i<N;i++){const q=j*N+i,nb=[[i+1,j],[i-1,j],[i,j+1],[i,j-1]].filter(([a,b])=>a>=0&&b>=0&&a<N&&b<N).map(([a,b])=>b*N+a);let c=col[q],o=q*4;
+  if(!c){if(nb.some(t=>col[t])){img.data.set([ir,ig,ib,255],o)}continue}
+  if(maj[q]&&nb.some(t=>maj[t]&&z[t]>z[q]&&prims[z[t]].f!==prims[z[q]].f)){img.data.set([ir,ig,ib,255],o);continue}
+  const[r,g,b]=rgb(c);img.data.set([r,g,b,255],o)}
+ ctx.putImageData(img,0,0)}
+
+/* ---- renderers B and C: SVG ---- */
+function shape(pr,extra){if(pr.e){const[cx,cy,rx,ry]=pr.e;return`<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}"${pr.rot?` transform="rotate(${pr.rot} ${cx} ${cy})"`:""} ${extra}/>`}
+ return`<polygon points="${pr.p.map(p=>p.join(",")).join(" ")}" stroke-linejoin="round" ${extra}/>`}
+function soft(prims){let s="";prims.forEach(pr=>{
+ s+=shape(pr,`fill="${pr.f}"${pr.o?` opacity="${pr.o}"`:""}${pr.d?"":` stroke="${mixc(pr.f,"#3b2947",.38)}" stroke-width="1.3"`}`);
+ if(pr.head){const[cx,cy,rx,ry]=pr.e;s+=`<ellipse cx="${cx-rx*.38}" cy="${cy-ry*.5}" rx="${rx*.32}" ry="${ry*.18}" fill="#fff" opacity=".4" transform="rotate(-20 ${cx-rx*.38} ${cy-ry*.5})"/>`}});return s}
+function sticker(prims){let s="";prims.forEach(pr=>{if(!pr.d)s+=shape(pr,`fill="#fff" stroke="#fff" stroke-width="7"`)});
+ prims.forEach(pr=>{s+=shape(pr,`fill="${pr.f}"${pr.o?` opacity="${pr.o}"`:""}`)});return s}
+
+/* ---- cards ---- */
+const cards=[];
+const surface=st=>st==="pixel"?'<canvas width="40" height="40"></canvas>':'<svg viewBox="0 0 100 100" aria-hidden="true"></svg>';
+document.querySelectorAll(".row").forEach(row=>{const st=row.dataset.style;MASCOTS.forEach((m,i)=>{
+ const c=document.createElement("div");c.className="card";c.tabIndex=0;c.setAttribute("role","button");c.setAttribute("aria-label",`${m.en}, ${st} style: tap to celebrate`);
+ c.innerHTML=`<div class="stage"><div class="shadow"></div><div class="fig idle" style="--d:-${(i*.7).toFixed(1)}s">${surface(st)}</div></div><div class="nm"><b lang="ar" dir="rtl">${m.ar}</b><span>${m.en}</span></div>`;
+ row.appendChild(c);const card={el:c,stage:c.querySelector(".stage"),m,st,s:{},fig:c.querySelector(".fig"),draw:c.querySelector("canvas,svg"),shadow:c.querySelector(".shadow")};cards.push(card);
+ c.addEventListener("click",()=>celebrate(card));c.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();celebrate(card)}})})});
+
+/* the big demo mascot is one more card */
+const dstage=$("dstage");
+const demo={el:dstage,stage:dstage,m:MASCOTS[0],st:"soft",s:{},fig:dstage.querySelector(".fig"),shadow:dstage.querySelector(".shadow")};cards.push(demo);
+function setDemo(m,st){demo.m=m;demo.st=st;dstage.className="stage s-"+st;demo.fig.innerHTML=surface(st);demo.draw=demo.fig.firstChild;
+ document.querySelectorAll("#dMascot button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.m===m.id));
+ document.querySelectorAll("#dStyle button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.s===st));render()}
+$("dMascot").innerHTML=MASCOTS.map(m=>`<button data-m="${m.id}">${m.en}</button>`).join("");
+$("dStyle").innerHTML=STYLES.map(s=>`<button data-s="${s.id}">${s.en}</button>`).join("");
+$("dMascot").addEventListener("click",e=>{const b=e.target.closest("button");if(b)setDemo(MASCOTS.find(m=>m.id===b.dataset.m),demo.st)});
+$("dStyle").addEventListener("click",e=>{const b=e.target.closest("button");if(b)setDemo(demo.m,b.dataset.s)});
+
+let G=2/6,target=G,blink=false;
+function render(){cards.forEach(c=>{if(!c.draw)return;const prims=build(c.m,G,{blink,...c.s});
+ if(c.st==="pixel")pixel(c.draw,prims);else c.draw.innerHTML=c.st==="soft"?soft(prims):sticker(prims);
+ c.shadow.style.width=(40+G*16)+"%"})}
+
+const reduce=matchMedia("(prefers-reduced-motion: reduce)");
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+let raf=0;
+function tween(){cancelAnimationFrame(raf);if(reduce.matches){G=target;render();return}const from=G,t0=performance.now();
+ const step=now=>{const p=Math.min(1,(now-t0)/450),e=1-Math.pow(1-p,3);G=from+(target-from)*e;render();if(p<1)raf=requestAnimationFrame(step)};raf=requestAnimationFrame(step)}
+$("g").addEventListener("input",e=>{const v=+e.target.value;$("kg").textContent=`+${v} kg`;target=v/6;tween()});
+
+/* blink now and then */
+(function loop(){setTimeout(()=>{if(!reduce.matches){blink=true;render();setTimeout(()=>{blink=false;render()},140)}loop()},2600+Math.random()*2600)})();
+
+/* one-off body animations: hop for a celebration, a squash for a happy bite */
+function play(c,cls,ms){if(reduce.matches)return;c.fig.classList.remove("idle","hop","yum");void c.fig.offsetWidth;c.fig.classList.add(cls);
+ clearTimeout(c.t);c.t=setTimeout(()=>{c.fig.classList.remove(cls);c.fig.classList.add("idle")},ms)}
+const PET=["#c48bd9","#f2a7bd","#e9b949","#fbd3e0","#7fa9a0"];
+function celebrate(c){if(reduce.matches)return;play(c,"hop",780);
+ for(let i=0;i<12;i++){const p=document.createElement("i");p.className="petal";const a=-Math.PI/2+(Math.random()-.5)*2.6,d=50+Math.random()*60;
+  p.style.setProperty("--dx",Math.cos(a)*d+"px");p.style.setProperty("--dy",Math.sin(a)*d+"px");p.style.setProperty("--r",(Math.random()*540-270)+"deg");
+  p.style.background=PET[i%PET.length];p.style.animationDelay=(150+i*18)+"ms";c.stage.appendChild(p);setTimeout(()=>p.remove(),1400)}}
+$("party").addEventListener("click",()=>cards.forEach((c,i)=>setTimeout(()=>celebrate(c),i*45)));
+
+/* ---- feeding ---- */
+const FOOD={
+ egg:'<ellipse cx="12" cy="13" rx="9.5" ry="7.5" fill="#fffaf3" stroke="#e4d3c0"/><circle cx="12" cy="13" r="3.8" fill="#f3b63f"/>',
+ apple:'<circle cx="12" cy="14" r="7.5" fill="#e26d7a"/><path d="M12 7c0-2 1-3.5 3-4" stroke="#7a4f3a" stroke-width="1.6" fill="none" stroke-linecap="round"/><ellipse cx="15.5" cy="5.5" rx="2.6" ry="1.4" fill="#7fa9a0" transform="rotate(-25 15.5 5.5)"/><ellipse cx="9" cy="11" rx="1.8" ry="1.1" fill="#fff" opacity=".5"/>',
+ bowl:'<ellipse cx="12" cy="11" rx="8" ry="4.5" fill="#fffaf3"/><path d="M3 12h18c0 5-4 8-9 8s-9-3-9-8z" fill="#c48bd9"/><circle cx="9" cy="9" r="1.2" fill="#f3b63f"/><circle cx="14" cy="9.5" r="1.2" fill="#7fa9a0"/>',
+ banana:'<path d="M4 8c2 7 9 10 16 7l1 1.5c-8 4-16 0-18.5-8z" fill="#f3cf4f" stroke="#c99b2e" stroke-width="1" stroke-linejoin="round"/>',
+ soup:'<path d="M3 11h18c0 5-4 8.5-9 8.5S3 16 3 11z" fill="#7fa9a0"/><ellipse cx="12" cy="11" rx="9" ry="2.2" fill="#e6a35a"/><path d="M9 7c-1-1.5 1-2.5 0-4M14 7c-1-1.5 1-2.5 0-4" stroke="#b9a7c4" stroke-width="1.3" fill="none" stroke-linecap="round"/>',
+ jar:'<rect x="6" y="7" width="12" height="14" rx="3" fill="#c48bd9"/><rect x="7" y="4" width="10" height="3.5" rx="1.2" fill="#7a4f8a"/><rect x="8" y="11" width="8" height="5" rx="1" fill="#fff"/>',
+ water:'<path d="M6 4h12l-1.6 16H7.6z" fill="#cfe6f2" stroke="#8fb8cc" stroke-width="1"/><path d="M6.8 10h10.4l-1 10H7.8z" fill="#8ec3dc"/>'};
+const MEALS=[["الإفطار","egg"],["سناك 1","apple"],["الغداء","bowl"],["سناك 2","banana"],["العشاء","soup"],["مزيونة 25 غ","jar"],["الماء 8 أكواب","water"]];
+const icon=k=>`<svg viewBox="0 0 24 24" aria-hidden="true">${FOOD[k]}</svg>`;
+$("ticks").innerHTML=MEALS.map(([t,k],i)=>`<li><label class="tick" for="t${i}"><input type="checkbox" id="t${i}" data-k="${k}"><span class="box"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5"/></svg></span><span class="ficon">${icon(k)}</span><span class="txt">${t}</span></label></li>`).join("");
+const C=163.4;
+function ring(){const n=document.querySelectorAll("#ticks input:checked").length;$("ring").style.strokeDashoffset=C*(1-n/MEALS.length);$("cnt").textContent=`${n} / ${MEALS.length}`;return n}
+let queue=Promise.resolve();
+async function feed(from,k){
+ const box=demo.draw.getBoundingClientRect(),[mx,my]=build.anchors(demo.m),tx=box.left+mx/100*box.width,ty=box.top+my/100*box.height;
+ const fx=from.left+from.width/2,fy=from.top+from.height/2,f=document.createElement("div");f.className="food";f.innerHTML=icon(k);document.body.appendChild(f);
+ const cx=(fx+tx)/2,cy=Math.min(fy,ty)-110,kf=[];
+ for(let i=0;i<=14;i++){const t=i/14,x=(1-t)*(1-t)*fx+2*(1-t)*t*cx+t*t*tx,y=(1-t)*(1-t)*fy+2*(1-t)*t*cy+t*t*ty;kf.push({transform:`translate(${x-18}px,${y-18}px) rotate(${t*260}deg) scale(${1-.55*t})`})}
+ const fly=f.animate(kf,{duration:720,easing:"cubic-bezier(.35,.1,.35,1)"});
+ setTimeout(()=>{demo.s.open=true;render()},380);
+ await fly.finished.catch(()=>{});f.remove();
+ for(let i=0;i<3;i++){demo.s.open=false;demo.s.full=true;render();await wait(110);demo.s.open=true;render();await wait(110)}
+ demo.s.open=false;render();play(demo,"yum",520);
+ const h=document.createElement("i");h.className="heart";h.style.left=mx+"%";h.style.top=(my-6)+"%";h.innerHTML='<svg viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z" fill="#e2729a"/></svg>';
+ demo.stage.appendChild(h);setTimeout(()=>h.remove(),950);
+ await wait(450);demo.s.full=false;render()}
+build.anchors=m=>m.f(0,{}).a.mouth;
+$("ticks").addEventListener("change",e=>{const inp=e.target;const n=ring();if(!inp.checked)return;
+ if(reduce.matches){if(n===MEALS.length)celebrate(demo);return}
+ const from=inp.closest(".tick").querySelector(".ficon").getBoundingClientRect(),k=inp.dataset.k;
+ queue=queue.then(()=>feed(from,k)).then(()=>{if(ring()===MEALS.length&&!demo.done){demo.done=true;return wait(150).then(()=>celebrate(demo))}})});
+$("dReset").addEventListener("click",()=>{document.querySelectorAll("#ticks input").forEach(i=>i.checked=false);demo.done=false;ring()});
+
+/* badge chips */
+$("chips").innerHTML=WEAR.map(w=>`<button class="chip" data-w="${w.id}" aria-pressed="${on.has(w.id)}">${w.item}<small>${w.badge}</small></button>`).join("");
+$("chips").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;const id=b.dataset.w;on.has(id)?on.delete(id):on.add(id);b.setAttribute("aria-pressed",on.has(id));render()});
+$("allOn").addEventListener("click",()=>{const all=on.size<WEAR.length;WEAR.forEach(w=>all?on.add(w.id):on.delete(w.id));document.querySelectorAll(".chip").forEach(b=>b.setAttribute("aria-pressed",on.has(b.dataset.w)));$("allOn").textContent=all?"No badges":"All badges";render()});
+
+setDemo(MASCOTS[0],"soft");
+}
+</script>

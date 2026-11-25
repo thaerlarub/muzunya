@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>مزيونة | الزبونات والخطط</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Aref+Ruqaa:wght@700&display=swap" rel="stylesheet">
+__LIBS__
+<style>
+/*
+VOICE: calm, feminine, practical; a small clinic's client book
+IDEA: a nutritionist's client card box plus the printed plan booklet
+PICTURE: the client list with weight trend chips is the working picture
+COLOUR and TYPE: Muzuna mauve on white, Tajawal body, Aref Ruqaa for the brand name
+LAYOUT: app bar with two tabs, one calm column on phones, A4 pages scaled to fit
+*/
+:root{--a:#c48bd9;--a2:#f1e4f6;--a3:#faf5fb;--ad:#7a4f8a;--ink:#2b2233;--muted:#6f6478;--bg:#f3eff5;--ok:#2f8a57;--bad:#c0392b}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Tajawal,Tahoma,Arial,sans-serif;overflow-x:clip}
+button,input,select{font:inherit}
+.top{position:sticky;top:0;z-index:20;background:#fff;border-bottom:3px solid var(--a);box-shadow:0 3px 14px #0000000d}
+.topin{max-width:1100px;margin:auto;display:flex;align-items:center;gap:10px;padding:8px 14px;flex-wrap:wrap}
+.logo{font-family:'Aref Ruqaa',serif;font-size:30px;color:var(--ad);line-height:1}
+.tabs{display:flex;gap:6px;margin-inline-start:auto;flex:none}
+.tab{flex:none;white-space:nowrap;border:0;background:var(--a3);color:var(--ad);font-weight:700;padding:10px 16px;border-radius:22px;cursor:pointer;min-height:44px}
+.tab.on{background:var(--a);color:#fff}
+.wrap{max-width:1100px;margin:auto;padding:14px}
+.note{font-size:13px;color:var(--muted)}
+.btn{border:0;background:var(--a);color:#fff;font-weight:700;padding:10px 16px;border-radius:12px;cursor:pointer;min-height:44px}
+.btn.g{background:#fff;color:var(--ad);border:1.5px solid var(--a2)}
+.btn.r{background:#fff;color:var(--bad);border:1.5px solid #f0c9c4}
+.btn:focus-visible,.tab:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--ad);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+input,select{font-size:16px;padding:10px 12px;border:1.5px solid #ddd3e2;border-radius:10px;background:#fff;min-height:44px;width:100%}
+label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.card{background:#fff;border-radius:16px;padding:14px;box-shadow:0 2px 10px #0000000a;border:1px solid #eee6f1}
+h2{font-size:20px;margin:0 0 10px;color:var(--ad)}
+/* customer list */
+.sum{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.sum .card{text-align:center;padding:12px 6px}
+.sum b{display:block;font-size:28px;color:var(--ad);line-height:1.1}
+.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px;margin-top:10px}
+.cu{cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:4px 10px;align-items:center}
+.cu:hover{border-color:var(--a)}
+.cu .nm{font-weight:800;font-size:17px}
+.cu .ph{font-size:13px;color:var(--muted)}
+.chg{font-weight:800;font-size:18px;white-space:nowrap;text-align:left}
+.up{color:var(--ok)}.dn{color:var(--bad)}.eq{color:var(--muted)}
+.due{display:inline-block;background:#fff1e0;color:#9a5300;border-radius:20px;padding:2px 10px;font-size:12px;font-weight:700}
+.spark{grid-column:1/-1;height:34px}
+.empty{text-align:center;padding:36px 14px;color:var(--muted)}
+.scroll{overflow-x:auto}
+table.t{border-collapse:collapse;width:100%;font-size:14px;background:#fff}
+.t th{background:var(--a);color:#fff;padding:8px;font-weight:700;white-space:nowrap}
+.t td{border:1px solid var(--a2);padding:8px;text-align:center;white-space:nowrap}
+.t td.n{text-align:right;font-weight:700}
+/* sheet */
+.sheet{position:fixed;inset:0;background:#2b223366;z-index:40;display:none;align-items:flex-end;justify-content:center}
+.sheet.on{display:flex}
+.sbody{background:#fff;width:100%;max-width:720px;max-height:92vh;overflow:auto;border-radius:20px 20px 0 0;padding:16px}
+@media(min-width:760px){.sheet{align-items:center}.sbody{border-radius:20px}}
+.shead{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.shead h2{margin:0;flex:1}
+.x{border:0;background:var(--a3);border-radius:50%;width:44px;height:44px;font-size:22px;cursor:pointer;color:var(--ad)}
+.chart{height:170px;position:relative;margin:8px 0}
+.chart svg{position:absolute;inset:0;width:100%;height:100%}
+.addw{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:end;margin:8px 0}
+.del{border:0;background:none;color:var(--bad);cursor:pointer;font-size:18px;min-width:36px;min-height:36px}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:12px;z-index:60;display:none;font-size:14px}
+/* plan panel */
+.stats{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.stat{background:var(--a3);border:1px solid var(--a2);border-radius:8px;padding:4px 10px;font-size:13px}
+.stat b{color:var(--ad)}
+.warn{background:#fff3e6;border:1px solid #f3c48d;color:#8a4b00;border-radius:8px;padding:6px 10px;font-size:13px;margin-top:8px;display:none}
+.sw{width:34px;height:34px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 1.5px #ccc;cursor:pointer}
+.stage{margin-top:14px;overflow:hidden}
+.pages{transform-origin:top right;display:flex;flex-direction:column;gap:16px;width:210mm}
+.prog{display:none;margin-top:8px;font-weight:700;color:var(--ad)}
+/* ===== A4 plan pages (no color-mix so the PDF renderer sees every colour) ===== */
+.page{width:210mm;height:297mm;background:#fff;position:relative;overflow:hidden;box-shadow:0 6px 24px #0002;padding:16mm 14mm 24mm;display:flex;flex-direction:column;font-size:14px;line-height:1.6}
+.pno{position:absolute;top:0;right:12mm;background:var(--a2);font-weight:800;font-size:18px;width:30px;height:38px;border-radius:0 0 10px 10px;display:grid;place-items:center;color:var(--ad)}
+.foot{position:absolute;bottom:9mm;left:0;right:0;text-align:center;line-height:1.2}
+.foot .brand{font-family:'Aref Ruqaa',serif;font-size:24px;color:var(--ad)}
+.foot .h{font-size:11px;color:var(--muted)}
+.bar{background:var(--a);color:#fff;text-align:center;font-weight:800;font-size:17px;padding:9px 14px;border-radius:4px;line-height:1.45;margin:6px 0 10px}
+.bar small{display:block;font-weight:500;font-size:13px}
+.sub{text-align:center;font-weight:700;font-size:14px;margin:4px 0 12px}
+.pnote{font-size:12px;color:var(--muted);line-height:1.6}
+.acc{color:var(--a);font-weight:700}
+.q{font-weight:800;color:var(--ad);border-bottom:1.5px dotted var(--a);padding:0 1px;outline:none;white-space:nowrap}
+.q.m{background:#fff6c9}
+.cap .q{border-bottom:0}.cap .q.m{background:none}.cap .page{box-shadow:none}
+ul.dots{margin:4px 0;padding-right:18px}ul.dots li{margin:2px 0}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);border:2px solid var(--a);flex:1;max-height:200mm}
+.pcard{border:1.5px solid var(--a2);padding:12px 12px 10px;position:relative;display:flex;flex-direction:column}
+.ico{font-size:50px;text-align:center;line-height:1.1;margin-bottom:8px}
+.chk{display:flex;gap:6px;font-weight:700;font-size:14.5px;line-height:1.8}
+.chk::before{content:"✔";color:var(--a);font-size:15px}
+.pcard .pnote{margin-top:8px}
+.tag{position:absolute;top:8px;left:8px;background:var(--a2);color:var(--ad);font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:5px}
+.page table{width:100%;border-collapse:collapse;font-size:12.5px}
+.page th{background:var(--a);color:#fff;font-weight:700;padding:8px 6px}
+.page td{border:1.5px solid var(--a2);padding:7px 8px;text-align:center;vertical-align:middle}
+.wk{border:2px solid var(--a)}.wk td{padding:13px 10px;font-size:13.5px;line-height:1.7}
+.wk td:nth-child(3){font-weight:700}
+.wk tr.l td{background:#faf8fb}
+.wk .mn{color:var(--a);font-weight:700}
+.tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:16px 8px;margin:8px 0 12px}
+.tile{text-align:center;font-size:13px;font-weight:700;line-height:1.45}
+.tile .ico{font-size:34px;margin-bottom:4px}
+.ways{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.way{border:1.5px solid var(--a2);border-radius:10px;padding:10px 8px;text-align:center;font-size:12.5px;background:var(--a3)}
+.way b{display:block;color:var(--ad);font-size:13.5px;margin-bottom:3px}
+.way .ico{font-size:30px;margin-bottom:4px}
+.big25{display:flex;align-items:center;gap:14px;background:var(--a3);border:2px dashed var(--a);border-radius:14px;padding:10px 16px;margin:4px 0 12px}
+.big25 .n{white-space:nowrap;font-size:40px;font-weight:800;color:var(--ad);line-height:1}
+.pills{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:8px 0}
+.pill{border:2px solid var(--a);color:var(--ad);border-radius:22px;padding:8px 16px;font-weight:700;font-size:14px;background:var(--a3)}
+.box{width:16px;height:16px;border:1.5px solid var(--a);border-radius:4px;display:inline-block}
+.shop{display:grid;grid-template-columns:1fr 1fr;border:2px solid var(--a);flex:1;max-height:215mm}
+.shop>div{padding:10px 14px}.shop>div+div{border-right:2px solid var(--a2)}
+.shop h4{margin:10px 0 4px;color:var(--a);font-size:14.5px;border-bottom:1.5px solid var(--a2);padding-bottom:3px}
+.shop ul{margin:0;padding-right:16px;font-size:12.5px;font-weight:500}
+.cover{background:var(--a);color:#fff;padding:0}
+.blob{position:absolute;width:150mm;height:150mm;border-radius:50%;background:var(--c1);left:-40mm;bottom:-20mm}
+.blob2{position:absolute;width:90mm;height:90mm;border-radius:50%;background:var(--c2);right:-30mm;top:-25mm}
+.ch{position:relative;padding:20mm 16mm 0;text-align:center}
+.ch .lg{font-family:'Aref Ruqaa',serif;font-size:64px;line-height:1}
+.ch .tl{font-size:15px}
+.ch h1{font-size:30px;margin:12px 0 2px;font-weight:800}
+.photo{position:relative;width:96mm;height:96mm;border-radius:50%;overflow:hidden;margin:10mm auto 8mm;border:6px solid #fff}
+.photo img{width:100%;height:100%;object-fit:cover}
+.cc{position:relative;margin:0 18mm;background:#fff;color:var(--ink);border-radius:16px;padding:12px 16px}
+.cc table{font-size:13px}.cc td{text-align:right}.cc td:first-child{color:var(--muted);width:42%}
+.cover .foot .brand,.cover .foot .h{color:#fff}
+.rules td{padding:14px 12px;font-size:13.5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sign{line-height:2.4;font-size:13.5px}
+@media(max-width:600px){.sum b{font-size:22px}.addw{grid-template-columns:1fr 1fr}.addw .btn{grid-column:1/-1}.tab{padding:10px 12px}}
+@media(prefers-reduced-motion:no-preference){.sbody{animation:up .18s ease-out}@keyframes up{from{transform:translateY(24px);opacity:.6}}}
+</style>
+</head>
+<body>
+<header class="top"><div class="topin"><div class="logo">مزيونة</div>
+<nav class="tabs"><button class="tab on" data-view="cust">الزبونات</button><button class="tab" data-view="plan">الخطة الغذائية</button></nav></div></header>
+
+<main class="wrap" id="vCust">
+ <div class="sum"><div class="card"><b id="sN">0</b>زبونة</div><div class="card"><b id="sDue">0</b>موعد متابعة</div><div class="card"><b id="sAvg">0</b>متوسط الزيادة كجم</div></div>
+ <div class="row"><button class="btn" id="newBtn">+ زبونة جديدة</button><input id="q" placeholder="بحث بالاسم أو الرقم" style="flex:1;min-width:160px"><button class="btn g" id="csvBtn">تصدير الجدول</button></div>
+ <p class="note" id="storeNote"></p>
+ <div class="list" id="list"></div>
+ <div class="card" style="margin-top:14px"><h2>جدول المتابعة الأسبوعية</h2><div class="scroll" id="tbl"></div></div>
+</main>
+
+<main class="wrap" id="vPlan" hidden>
+ <div class="card">
+  <h2>بيانات الخطة</h2>
+  <div class="grid">
+   <label>الزبونة<select id="pick"></select></label>
+   <label>الاسم<input id="name"></label>
+   <label>الطول (سم)<input id="h" type="number" inputmode="decimal"></label>
+   <label>الوزن الحالي (كجم)<input id="w" type="number" inputmode="decimal"></label>
+   <label>مستوى النشاط<select id="act"><option value="1.2">قليل جدا</option><option value="1.375">خفيف (1 إلى 3 أيام رياضة)</option><option value="1.55">متوسط (3 إلى 5 أيام)</option><option value="1.725">عالي (6 إلى 7 أيام)</option></select></label>
+   <label>الزيادة اليومية<select id="sur"><option value="300">300 سعرة</option><option value="400">400 سعرة</option><option value="500">500 سعرة</option></select></label>
+   <label>سعرات يدوية (اختياري)<input id="man" type="number" inputmode="numeric" placeholder="تلغي الحساب"></label>
+   <label>اسم الأخصائية<input id="dt"></label>
+   <label>تاريخ الخطة<input id="date" type="date"></label>
+   <label>نص التذييل<input id="hd" value="مزيونة | خلطة الأنوثة"></label>
+  </div>
+  <div class="stats" id="stats"></div>
+  <div class="warn" id="warn"></div>
+  <div class="row" style="margin-top:12px">
+   <span class="note">اللون:</span>
+   <button class="sw" style="background:#c48bd9" data-c="#c48bd9" aria-label="بنفسجي"></button>
+   <button class="sw" style="background:#d98ca3" data-c="#d98ca3" aria-label="وردي"></button>
+   <button class="sw" style="background:#b98a6e" data-c="#b98a6e" aria-label="بني"></button>
+   <button class="sw" style="background:#7fa9a0" data-c="#7fa9a0" aria-label="أخضر"></button>
+   <button class="btn" id="pdfBtn">حفظ PDF</button>
+   <button class="btn g" id="reset">إعادة حساب الكميات</button>
+  </div>
+  <div class="prog" id="prog"></div>
+  <p class="note">الأرقام الملونة داخل الخطة يمكن الضغط عليها وتعديلها يدويا. العمر غير مطلوب: الحساب يفترض عمرا متوسطا، والفرق لا يتجاوز تقريبا 50 سعرة لكل 10 سنوات.</p>
+ </div>
+ <div class="stage" id="stage"><div class="pages" id="pages"></div></div>
+</main>
+
+<div class="sheet" id="sheet"><div class="sbody" id="sbody"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+{
+const PHOTO="__PHOTO__";
+const BASE=2200, AGE=25;
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const toast=m=>{const t=$("toast");t.textContent=m;t.style.display="block";clearTimeout(toast.t);toast.t=setTimeout(()=>t.style.display="none",2600)};
+const today=()=>new Date().toISOString().slice(0,10);
+const days=d=>Math.floor((Date.now()-new Date(d+"T12:00:00").getTime())/864e5);
+const fmtD=d=>d?new Date(d+"T12:00:00").toLocaleDateString("ar-OM-u-nu-latn",{day:"numeric",month:"short"}):"";
+
+/* ---------- colours (hex, so the PDF renderer understands them) ---------- */
+function mix(hex,to,p){const a=parseInt(hex.slice(1),16),b=parseInt(to.slice(1),16);const ch=(x,s)=>(x>>s)&255;const m=s=>Math.round(ch(a,s)*(1-p)+ch(b,s)*p);return"#"+[16,8,0].map(s=>m(s).toString(16).padStart(2,"0")).join("")}
+function setCol(c){const r=document.documentElement.style;r.setProperty("--a",c);r.setProperty("--a2",mix(c,"#ffffff",.78));r.setProperty("--a3",mix(c,"#ffffff",.91));r.setProperty("--ad",mix(c,"#000000",.3));r.setProperty("--c1",mix(c,"#ffffff",.18));r.setProperty("--c2",mix(c,"#000000",.08));try{localStorage.setItem("mz_col",c)}catch(e){}}
+
+/* ---------- storage: Claude db (syncs phone and computer), else this device ---------- */
+let customers={},db=null,col=null,cur=null,ready=false;
+const LS="mz_customers";
+function lsLoad(){try{customers=JSON.parse(localStorage.getItem(LS)||"{}")}catch(e){customers={}}}
+function lsSave(){try{localStorage.setItem(LS,JSON.stringify(customers))}catch(e){}}
+const queue={};
+async function save(c){customers[c.id]=c;renderAll();
+ if(col){const prev=queue[c.id]||Promise.resolve();queue[c.id]=prev.then(()=>col.doc(c.id).set(JSON.parse(JSON.stringify(c)))).catch(e=>toast(e&&e.code==="quota_exceeded"?"المساحة ممتلئة، احذفي زبونات قديمة":"تعذر الحفظ، حاولي مرة أخرى"))}
+ else lsSave()}
+async function remove(id){delete customers[id];renderAll();if(col){try{await col.doc(id).delete()}catch(e){toast("تعذر الحذف")}}else lsSave()}
+const newId=()=>"c"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+
+async function initStore(){
+ lsLoad();renderAll();
+ try{
+  db=await claude.use("db");const user=await claude.use("user");const uid=user?await user.id():null;
+  if(db&&uid){col=db.collection("data/users/"+uid);
+   const tm=setTimeout(()=>{$("storeNote").textContent="جاري تحميل البيانات... إذا تأخرت تأكدي من الاتصال بالإنترنت."},10000);
+   col.onSnapshot(s=>{clearTimeout(tm);const m={};s.docs.forEach(d=>{const v=d.data();if(v&&v.name!=null)m[d.id]={...v,id:d.id,weights:[...(v.weights||[])]}});customers=m;ready=true;
+     $("storeNote").textContent="البيانات محفوظة في حسابك وتظهر على الجوال والكمبيوتر.";renderAll()},
+    e=>{clearTimeout(tm);$("storeNote").textContent="تعذر الوصول إلى البيانات المحفوظة، التعديلات الآن على هذا الجهاز فقط.";col=null});
+   return}
+ }catch(e){}
+ $("storeNote").textContent="البيانات محفوظة على هذا الجهاز فقط.";
+}
+
+/* ---------- customer helpers ---------- */
+const sorted=c=>[...(c.weights||[])].sort((a,b)=>a.d<b.d?-1:1);
+const lastW=c=>{const s=sorted(c);return s.length?s[s.length-1].w:+c.w0};
+const lastD=c=>{const s=sorted(c);return s.length?s[s.length-1].d:c.start};
+const isDue=c=>days(lastD(c))>=7;
+const chg=c=>Math.round((lastW(c)-c.w0)*10)/10;
+const cls=v=>v>0?"up":v<0?"dn":"eq";
+const sgn=v=>(v>0?"+":"")+v;
+
+function spark(c){const pts=[+c.w0,...sorted(c).map(x=>+x.w)];if(pts.length<2)return"";const mn=Math.min(...pts),mx=Math.max(...pts),r=mx-mn||1;const W=300,H=34;
+ const p=pts.map((v,i)=>`${(W-4-i*(W-8)/(pts.length-1)).toFixed(1)},${(H-4-(v-mn)/r*(H-8)).toFixed(1)}`).join(" ");
+ return`<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"><polyline points="${p}" fill="none" stroke="var(--a)" stroke-width="2.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg>`}
+
+function renderAll(){renderList();renderTable();renderPick();if($("sheet").classList.contains("on")&&cur&&customers[cur])openSheet(cur)}
+function renderList(){
+ const q=$("q").value.trim(),arr=Object.values(customers).filter(c=>!q||(c.name||"").includes(q)||(c.phone||"").includes(q));
+ arr.sort((a,b)=>(isDue(b)-isDue(a))||((a.name||"").localeCompare(b.name||"","ar")));
+ const all=Object.values(customers);$("sN").textContent=all.length;$("sDue").textContent=all.filter(isDue).length;
+ $("sAvg").textContent=all.length?(Math.round(all.reduce((s,c)=>s+chg(c),0)/all.length*10)/10):0;
+ $("list").innerHTML=arr.length?arr.map(c=>{const v=chg(c);return`<div class="card cu" data-id="${esc(c.id)}" tabindex="0" role="button">
+  <div><div class="nm">${esc(c.name)}</div><div class="ph"><bdo dir="ltr">${esc(c.phone||"")}</bdo></div>
+  <div class="note">${(sorted(c).length)} أسبوع متابعة · آخر وزن ${esc(lastW(c))} كجم ${isDue(c)?'<span class="due">موعد الاتصال</span>':""}</div></div>
+  <div class="chg ${cls(v)}">${sgn(v)} كجم</div>${spark(c)}</div>`}).join(""):`<div class="card empty">${all.length?"لا توجد نتائج":"لا توجد زبونات بعد. اضغطي <b>+ زبونة جديدة</b> لإضافة أول زبونة."}</div>`;
+}
+function renderTable(){
+ const all=Object.values(customers).sort((a,b)=>(a.name||"").localeCompare(b.name||"","ar"));
+ if(!all.length){$("tbl").innerHTML='<p class="note">يظهر الجدول بعد إضافة الزبونات.</p>';return}
+ const n=Math.max(4,...all.map(c=>sorted(c).length));
+ $("tbl").innerHTML=`<table class="t"><thead><tr><th>الاسم</th><th>الوزن قبل</th>${Array.from({length:n},(_,i)=>`<th>أسبوع ${i+1}</th>`).join("")}<th>التغير</th></tr></thead><tbody>${all.map(c=>{const s=sorted(c),v=chg(c);
+  return`<tr><td class="n">${esc(c.name)}</td><td>${esc(c.w0)}</td>${Array.from({length:n},(_,i)=>`<td>${s[i]?esc(s[i].w):""}</td>`).join("")}<td class="${cls(v)}"><b>${sgn(v)}</b></td></tr>`}).join("")}</tbody></table>`;
+}
+
+/* ---------- customer sheet ---------- */
+function openSheet(id){
+ cur=id;const c=id?customers[id]:{name:"",phone:"",h:"",w0:"",act:"1.375",sur:"400",start:today(),weights:[]};const isNew=!id;
+ const s=sorted(c);
+ $("sbody").innerHTML=`<div class="shead"><h2>${isNew?"زبونة جديدة":esc(c.name)}</h2><button class="x" id="sx" aria-label="إغلاق">×</button></div>
+ <div class="grid">
+  <label>الاسم<input id="fN" value="${esc(c.name)}"></label>
+  <label>رقم الهاتف<input id="fP" type="tel" inputmode="tel" value="${esc(c.phone||"")}" style="direction:ltr;text-align:right"></label>
+  <label>الطول (سم)<input id="fH" type="number" inputmode="decimal" value="${esc(c.h)}"></label>
+  <label>الوزن قبل البدء (كجم)<input id="fW" type="number" inputmode="decimal" step="0.1" value="${esc(c.w0)}"></label>
+  <label>تاريخ البدء<input id="fS" type="date" value="${esc(c.start||today())}"></label>
+ </div>
+ <div class="row" style="margin-top:10px"><button class="btn" id="fSave">${isNew?"إضافة الزبونة":"حفظ التعديلات"}</button>${isNew?"":`<button class="btn g" id="fPlan">فتح خطتها</button><button class="btn r" id="fDel">حذف</button>`}</div>
+ ${isNew?"":`<h2 style="margin-top:16px">متابعة الوزن الأسبوعية</h2>
+ <div class="addw"><label>الوزن اليوم (كجم)<input id="aW" type="number" inputmode="decimal" step="0.1"></label><label>التاريخ<input id="aD" type="date" value="${today()}"></label><button class="btn" id="aBtn">تسجيل</button></div>
+ <div class="chart" id="chart"></div>
+ <div class="scroll"><table class="t"><thead><tr><th>الأسبوع</th><th>التاريخ</th><th>الوزن</th><th>التغير من البداية</th><th></th></tr></thead><tbody>
+ <tr><td>البداية</td><td>${esc(fmtD(c.start))}</td><td>${esc(c.w0)}</td><td>-</td><td></td></tr>
+ ${s.map((x,i)=>{const v=Math.round((x.w-c.w0)*10)/10;return`<tr><td>${i+1}</td><td>${esc(fmtD(x.d))}</td><td><b>${esc(x.w)}</b></td><td class="${cls(v)}"><b>${sgn(v)}</b></td><td><button class="del" data-k="${esc(x.k)}" aria-label="حذف">×</button></td></tr>`}).join("")}
+ </tbody></table></div>`}`;
+ $("sheet").classList.add("on");
+ if(!isNew)drawChart(c);
+}
+function drawChart(c){const el=$("chart");if(!el)return;const pts=[{d:c.start,w:+c.w0},...sorted(c).map(x=>({d:x.d,w:+x.w}))];
+ const W=el.clientWidth||600,H=el.clientHeight,pl=40,pr=14,pt=14,pb=26;if(pts.length<2){el.innerHTML='<p class="note" style="text-align:center;padding-top:60px">سجلي أول وزن أسبوعي ليظهر الرسم.</p>';return}
+ const ws=pts.map(p=>p.w),mn=Math.floor(Math.min(...ws)-.5),mx=Math.ceil(Math.max(...ws)+.5);
+ const X=i=>W-pr-i*(W-pl-pr)/(pts.length-1),Y=v=>pt+(mx-v)/(mx-mn)*(H-pt-pb);
+ let g="";for(let v=mn;v<=mx;v+=Math.max(1,Math.round((mx-mn)/4))){g+=`<line x1="${pl-6}" x2="${W-pr}" y1="${Y(v)}" y2="${Y(v)}" stroke="#eee"/><text x="${pl-10}" y="${Y(v)+4}" font-size="11" fill="#6f6478" text-anchor="end">${v}</text>`}
+ const lab=W<420?"":pts.map((p,i)=>`<text x="${X(i)}" y="${H-6}" font-size="11" fill="#6f6478" text-anchor="middle">${i?"أ"+i:"البداية"}</text>`).join("");
+ el.innerHTML=`<svg viewBox="0 0 ${W} ${H}">${g}<line x1="${pl}" x2="${W-pr}" y1="${Y(c.w0)}" y2="${Y(c.w0)}" stroke="var(--a2)" stroke-width="2" stroke-dasharray="5 4"/><polyline points="${pts.map((p,i)=>X(i)+","+Y(p.w)).join(" ")}" fill="none" stroke="var(--a)" stroke-width="3"/>${pts.map((p,i)=>`<circle cx="${X(i)}" cy="${Y(p.w)}" r="4.5" fill="#fff" stroke="var(--ad)" stroke-width="2"/>`).join("")}${lab}</svg>`}
+
+$("sheet").addEventListener("click",e=>{
+ if(e.target.id==="sheet"||e.target.id==="sx"){$("sheet").classList.remove("on");cur=null;return}
+ if(e.target.id==="fSave"){const n=$("fN").value.trim(),w=+$("fW").value;if(!n||!w){toast("الاسم والوزن قبل البدء مطلوبان");return}
+  const c=cur?{...customers[cur]}:{id:newId(),act:"1.375",sur:"400",weights:[]};
+  Object.assign(c,{name:n,phone:$("fP").value.trim(),h:+$("fH").value||"",w0:w,start:$("fS").value||today()});cur=c.id;save(c);toast("تم الحفظ");openSheet(c.id);return}
+ if(e.target.id==="aBtn"){const w=+$("aW").value,d=$("aD").value||today();if(!w){toast("اكتبي الوزن");return}
+  const c={...customers[cur],weights:[...(customers[cur].weights||[]),{k:newId(),d,w}]};save(c);toast("تم تسجيل الوزن");return}
+ if(e.target.classList.contains("del")){const k=e.target.dataset.k,c={...customers[cur],weights:customers[cur].weights.filter(x=>x.k!==k)};save(c);return}
+ if(e.target.id==="fDel"){if(e.target.dataset.sure){remove(cur);$("sheet").classList.remove("on");cur=null;toast("تم الحذف")}else{e.target.dataset.sure=1;e.target.textContent="اضغطي مرة ثانية للتأكيد"}return}
+ if(e.target.id==="fPlan"){const id=cur;$("sheet").classList.remove("on");show("plan");$("pick").value=id;loadPick();return}
+});
+$("list").addEventListener("click",e=>{const c=e.target.closest(".cu");if(c)openSheet(c.dataset.id)});
+$("list").addEventListener("keydown",e=>{if(e.key==="Enter"){const c=e.target.closest(".cu");if(c)openSheet(c.dataset.id)}});
+$("newBtn").addEventListener("click",()=>openSheet(null));
+$("q").addEventListener("input",renderList);
+let dl=null;
+$("csvBtn").addEventListener("click",async()=>{const all=Object.values(customers);if(!all.length){toast("لا توجد بيانات");return}
+ const n=Math.max(...all.map(c=>sorted(c).length),1);const q=v=>'"'+String(v??"").replace(/"/g,'""')+'"';
+ const rows=[["الاسم","الهاتف","الطول","الوزن قبل","تاريخ البدء",...Array.from({length:n},(_,i)=>"أسبوع "+(i+1)),"التغير"].map(q).join(",")];
+ all.forEach(c=>{const s=sorted(c);rows.push([c.name,c.phone,c.h,c.w0,c.start,...Array.from({length:n},(_,i)=>s[i]?s[i].w:""),chg(c)].map(q).join(","))});
+ if(!dl){toast("التصدير غير متاح هنا");return}
+ try{await dl.save({filename:"مزيونة - متابعة الزبونات.csv",data:"﻿"+rows.join("\n")})}catch(e){if(e&&e.code!=="declined")toast("تعذر حفظ الملف")}});
+
+/* ---------- views ---------- */
+function show(v){document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("on",t.dataset.view===v));$("vCust").hidden=v!=="cust";$("vPlan").hidden=v!=="plan";if(v==="plan")fit()}
+document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>show(t.dataset.view)));
+
+/* ---------- plan ---------- */
+__DATA__
+const tok=s=>s.replace(/\{([\d.]+)\|(\w+)\}/g,(m,v,u)=>`<span class="q" contenteditable="true" spellcheck="false" data-b="${v}" data-u="${u}"></span>`);
+const foot=n=>`<div class="foot"><div class="brand">مزيونة</div><div class="h" data-hd></div></div>${n?`<div class="pno">${n}</div>`:""}`;
+const P=[];
+P.push(`<section class="page cover"><div class="blob"></div><div class="blob2"></div>
+<div class="ch"><div class="lg">مزيونة</div><div class="tl">خلطة الأنوثة</div><h1>برنامج زيادة الوزن الصحي</h1><div class="tl">خطة غذائية أسبوعية مخصصة</div></div>
+<div class="photo"><img src="${PHOTO}" alt=""></div>
+<div class="cc"><table><tbody>
+<tr><td>اسم الزبونة</td><td><b data-v="name"></b></td></tr>
+<tr><td>الطول / الوزن</td><td><span data-v="h"></span> سم / <span data-v="w"></span> كجم</td></tr>
+<tr><td>مؤشر كتلة الجسم</td><td data-v="bmi"></td></tr>
+<tr><td>السعرات اليومية المستهدفة</td><td><b data-v="kcal"></b> سعرة</td></tr>
+<tr><td>البروتين اليومي</td><td><b data-v="prot"></b> غ تقريبا</td></tr>
+<tr><td>الهدف</td><td>زيادة 0.25 إلى 0.5 كجم أسبوعيا</td></tr>
+<tr><td>الأخصائية / التاريخ</td><td><span data-v="dt"></span> / <span data-v="date"></span></td></tr>
+</tbody></table></div>${foot(0)}</section>`);
+P.push(`<section class="page"><div class="bar">الإفطار: نختار واحدا مما يلي<small>(لا ننسى حبة الفاكهة المذكورة) / لا يشترط الالتزام بالترتيب</small></div>
+<div class="sub">البدائل: 2 توست = نصف رغيف خبز عربي = 5 ملاعق شوفان = 4 كعك أرز</div>
+<div class="cards">${breakfast.map(b=>`<div class="pcard">${b.tag?`<span class="tag">${b.tag}</span>`:""}<div class="ico">${b.i}</div>${b.t.map(l=>`<div class="chk"><span>${tok(l)}</span></div>`).join("")}<div class="pnote">${tok(b.n)}</div></div>`).join("")}</div>
+<p class="pnote" style="margin-top:10px">م.ك = ملعقة كبيرة، م.ص = ملعقة صغيرة. الكميات محسوبة حسب احتياج الزبونة اليومي.</p>${foot(1)}</section>`);
+P.push(`<section class="page"><ul class="dots" style="font-weight:700;font-size:13px"><li>يفضل الالتزام بالترتيب لكن يسمح باستبدال يوم بآخر عند الضرورة.</li><li>لا نشرب كمية كبيرة من الماء قبل الوجبة مباشرة حتى لا تقل الشهية، ونشربه بين الوجبات.</li></ul>
+<table class="wk"><thead><tr><th style="width:9%">اليوم</th><th style="width:11%">الوقت</th><th>الوجبة</th></tr></thead><tbody>
+${week.map((d,i)=>`<tr class="l"><td rowspan="2" class="mn">${i+1}</td><td class="mn">غداء</td><td>${tok(d[0])}</td></tr><tr><td><b>عشاء</b></td><td>${tok(d[1])}</td></tr>`).join("")}
+</tbody></table>${foot(2)}</section>`);
+P.push(`<section class="page"><div class="bar">مزيونة يوميا<small>حصة ثابتة لا تتغير، مرة واحدة في اليوم</small></div>
+<div class="big25"><div class="n">25 غ</div><div>تتناول الزبونة 25 غراما من خلطة مزيونة يوميا ضمن إحدى الوجبات الخفيفة، وتختار طريقة التحضير المناسبة لها. الحليب والموز والمكسرات تضيف سعرات وبروتينا وتحتسب ضمن مجموع اليوم.</div></div>
+<div class="ways">${ways.map(w=>`<div class="way"><div class="ico">${w[0]}</div><b>${w[1]}</b>${tok(w[2])}</div>`).join("")}</div>
+<div class="bar" style="font-size:15px">جدول مزيونة الأسبوعي</div>
+<table><thead><tr><th>اليوم</th><th>الحصة</th><th>طريقة التناول</th><th>تم التناول</th></tr></thead><tbody>
+${mzWeek.map((m,i)=>`<tr><td>${i+1}</td><td><b>25 غ</b></td><td>${m}</td><td><span class="box"></span></td></tr>`).join("")}</tbody></table>
+<p class="pnote" style="margin-top:10px">مهم: يتم التحقق من مسببات الحساسية قبل البدء، خاصة المكسرات والحليب.</p>${foot(3)}</section>`);
+P.push(`<section class="page"><div class="bar">السناك: وجبتان خفيفتان يوميا<small>بالإضافة إلى حصة مزيونة، بين الإفطار والغداء وبين الغداء والعشاء</small></div>
+<div class="tiles">${snacks.map(s=>`<div class="tile"><div class="ico">${s[0]}</div>${tok(s[1])}</div>`).join("")}</div>
+<div class="bar">جدول البدائل</div>
+<table><thead><tr><th style="width:20%">المجموعة</th><th>كل حصة تساوي</th></tr></thead><tbody>${exch.map(e=>`<tr><td><b>${e[0]}</b></td><td>${e[1]}</td></tr>`).join("")}</tbody></table>
+<div class="bar" style="margin-top:14px">إضافات ذكية لرفع السعرات</div>
+<ul class="dots" style="font-size:13px"><li>ملعقة زيت زيتون فوق السلطة أو الأرز تضيف حوالي 120 سعرة.</li><li>الطحينة وزبدة الفول السوداني مع التوست أو الفاكهة.</li><li>حليب كامل الدسم بدل الماء في الشوفان والشوربات.</li><li>رشة مكسرات مطحونة فوق الزبادي والسلطات.</li></ul>${foot(4)}</section>`);
+P.push(`<section class="page"><div class="bar">المشروبات</div>
+<div class="pills"><span class="pill">حليب كامل الدسم</span><span class="pill">عصير طبيعي (كوب يوميا)</span><span class="pill">سموذي الفواكه</span><span class="pill">ميلك شيك مزيونة</span><span class="pill">لبن رائب</span></div>
+<ul class="dots" style="font-size:13px"><li>القهوة والشاي: كوب واحد بعد الوجبة وليس قبلها، لأنها قد تقلل الشهية.</li><li>لا ننسى شرب 8 أكواب ماء يوميا، موزعة بين الوجبات.</li></ul>
+<div class="bar" style="margin-top:12px">قواعد زيادة الوزن الصحي</div>
+<table class="rules"><tbody>
+<tr><td style="width:28%"><b>انتظام الوجبات</b></td><td>وجبة أو سناك كل 3 ساعات تقريبا، وعدم تخطي الإفطار أبدا.</td></tr>
+<tr><td><b>الشهية</b></td><td>إذا كانت الشهية ضعيفة نبدأ بالسوائل الغنية مثل الميلك شيك، ونصغر حجم الوجبة ونزيد عددها.</td></tr>
+<tr><td><b>الرياضة</b></td><td>تمارين المقاومة 2 إلى 3 مرات أسبوعيا حتى تتجه الزيادة إلى العضل ويتحسن القوام.</td></tr>
+<tr><td><b>النوم</b></td><td>7 إلى 8 ساعات يوميا، فقلة النوم تؤثر على الشهية والهرمونات.</td></tr>
+<tr><td><b>الصبر</b></td><td>الزيادة الصحية بطيئة وثابتة، وأي زيادة سريعة جدا تكون غالبا دهونا أو سوائل.</td></tr>
+</tbody></table>${foot(5)}</section>`);
+P.push(`<section class="page"><div class="bar">مقترح قائمة التسوق الأسبوعية</div>
+<div class="shop">${shop.map(c=>`<div>${c.map(s=>`<h4>${s[0]}</h4><ul>${s[1].map(x=>`<li>${tok(x)}</li>`).join("")}</ul>`).join("")}</div>`).join("")}</div>${foot(6)}</section>`);
+P.push(`<section class="page"><div class="bar">المتابعة الأسبوعية للقياسات</div>
+<div class="two"><div><b>شروط أخذ القياسات:</b><ul class="dots" style="font-size:12.5px"><li>صباحا قبل تناول أي وجبة وبعد دخول الحمام.</li><li>بنفس الملابس وعلى نفس الميزان.</li><li>بنفس اليوم من كل أسبوع.</li><li>تجنب الوزن وقت الدورة الشهرية.</li></ul></div>
+<div><b>درجة الالتزام:</b><ul class="dots" style="font-size:12.5px"><li>25% الوجبات وأوقاتها</li><li>25% حصة مزيونة اليومية</li><li>25% النوم</li><li>25% الرياضة</li></ul></div></div>
+<table style="margin-top:8px"><thead><tr><th>المؤشر</th><th>قبل البدء</th><th>الأسبوع 1</th><th>الأسبوع 2</th><th>الأسبوع 3</th><th>الأسبوع 4</th></tr></thead><tbody>
+${["الوزن (كجم)","الذراع (سم)","الصدر (سم)","الخصر (سم)","الأرداف (سم)","الفخذ (سم)","الشهية (1 إلى 5)","الالتزام %"].map(r=>`<tr><td style="background:var(--a3)"><b>${r}</b></td><td></td><td></td><td></td><td></td><td></td></tr>`).join("")}
+</tbody></table>
+<div class="bar" style="margin-top:14px">اعتماد أخصائية التغذية</div>
+<div class="sign">السعرات اليومية المعتمدة: <b data-v="kcal"></b> سعرة &nbsp;&nbsp; البروتين: <b data-v="prot"></b> غ<br>
+ملاحظات الحساسية والتحمل الغذائي: ...........................................................................<br>
+ملاحظات إضافية: ................................................................................................<br>
+اسم الأخصائية: <span data-v="dt"></span> ........................ &nbsp; التوقيع: ........................ &nbsp; التاريخ: <span data-v="date"></span></div>
+<p class="pnote">هذه الخطة مخصصة لحالة الزبونة المذكورة فقط وتطبق تحت إشراف الأخصائية.</p>${foot(7)}</section>`);
+$("pages").innerHTML=P.join("");
+
+const fmt=(v,u)=>{if(u==="g")return v>=50?Math.round(v/10)*10:Math.max(5,Math.round(v/5)*5);if(u==="ml")return Math.max(50,Math.round(v/25)*25);
+ if(u==="hf"){const r=Math.max(.5,Math.round(v*2)/2),i=Math.floor(r);return r%1?(i?i+"½":"½"):r}return Math.max(1,Math.round(v))};
+const PF=["name","h","w","act","sur","man","dt","date","hd"];
+function calc(){
+ const w=+$("w").value||0,h=+$("h").value||0;
+ const bmr=10*w+6.25*h-5*AGE-161,tdee=bmr*+$("act").value;
+ const kcal=+$("man").value||Math.round((tdee+ +$("sur").value)/50)*50;
+ const f=Math.min(1.5,Math.max(.75,kcal/BASE));
+ const bmi=h?w/((h/100)**2):0,lo=18.5*(h/100)**2,hi=24.9*(h/100)**2,prot=Math.round(w*1.5/5)*5;
+ const d=$("date").value?new Date($("date").value+"T12:00:00").toLocaleDateString("ar-OM-u-nu-latn"):"";
+ const V={name:$("name").value,h,w,kcal,prot,dt:$("dt").value||"..............",date:d||"..............",bmi:bmi?bmi.toFixed(1)+(bmi<18.5?" (نقص وزن)":bmi<25?" (طبيعي)":" (فوق الطبيعي)"):""};
+ document.querySelectorAll("[data-v]").forEach(e=>e.textContent=V[e.dataset.v]??"");
+ document.querySelectorAll("[data-hd]").forEach(e=>e.textContent=$("hd").value);
+ document.querySelectorAll(".q").forEach(e=>{if(!e.classList.contains("m"))e.textContent=fmt(+e.dataset.b*f,e.dataset.u)});
+ $("stats").innerHTML=w&&h?`<span class="stat">احتياج الثبات <b>${Math.round(tdee)}</b></span><span class="stat">الهدف <b>${kcal}</b> سعرة</span><span class="stat">البروتين <b>${prot}</b> غ</span><span class="stat">الوزن الصحي لطولها <b>${lo.toFixed(0)} إلى ${hi.toFixed(0)}</b> كجم</span>`:"";
+ const wr=$("warn");
+ if(bmi>=25){wr.style.display="block";wr.textContent="تنبيه: مؤشر كتلة الجسم فوق الطبيعي. برنامج زيادة الوزن قد لا يناسب هذه الزبونة."}
+ else if(w&&h&&(kcal/BASE>1.5||kcal/BASE<.75)){wr.style.display="block";wr.textContent="تنبيه: السعرات خارج نطاق القالب، راجعي الكميات يدويا."}
+ else wr.style.display="none";
+}
+function renderPick(){const s=$("pick"),v=s.value;s.innerHTML=`<option value="">بدون زبونة محفوظة</option>`+Object.values(customers).sort((a,b)=>(a.name||"").localeCompare(b.name||"","ar")).map(c=>`<option value="${esc(c.id)}">${esc(c.name)}</option>`).join("");s.value=customers[v]?v:""}
+function loadPick(){const c=customers[$("pick").value];if(!c)return;$("name").value=c.name;$("h").value=c.h||"";$("w").value=lastW(c);$("act").value=c.act||"1.375";$("sur").value=c.sur||"400";$("man").value=c.man||"";
+ document.querySelectorAll(".q.m").forEach(q=>q.classList.remove("m"));calc()}
+let pt=null;
+PF.forEach(k=>$(k).addEventListener("input",()=>{calc();
+ try{localStorage.setItem("mz_plan_"+k,$(k).value)}catch(e){}
+ const c=customers[$("pick").value];if(c&&["act","sur","man"].includes(k)){clearTimeout(pt);pt=setTimeout(()=>save({...customers[c.id],act:$("act").value,sur:$("sur").value,man:$("man").value}),900)}}));
+$("pick").addEventListener("change",loadPick);
+document.querySelectorAll(".sw").forEach(s=>s.addEventListener("click",()=>setCol(s.dataset.c)));
+$("pages").addEventListener("input",e=>{const q=e.target.closest(".q");if(q)q.classList.add("m")});
+$("reset").addEventListener("click",()=>{document.querySelectorAll(".q.m").forEach(q=>q.classList.remove("m"));calc()});
+
+function fit(){const st=$("stage"),pg=$("pages");const s=Math.min(1,(st.clientWidth)/pg.offsetWidth);pg.style.transform=`scale(${s})`;st.style.height=(pg.offsetHeight*s)+"px"}
+const ro=new ResizeObserver(fit);ro.observe($("stage"));
+
+async function makePdf(){
+ if(!window.html2canvas||!window.jspdf){toast("أداة PDF لم تُحمّل، تأكدي من الإنترنت");return}
+ const btn=$("pdfBtn"),pr=$("prog");btn.disabled=true;pr.style.display="block";
+ const pg=$("pages"),old=pg.style.transform;pg.style.transform="none";document.body.classList.add("cap");
+ try{await document.fonts.ready;
+  const pdf=new window.jspdf.jsPDF({unit:"mm",format:"a4",orientation:"p",compress:true});const ps=[...pg.querySelectorAll(".page")];
+  for(let i=0;i<ps.length;i++){pr.textContent=`جاري تجهيز الصفحة ${i+1} من ${ps.length}...`;
+   const cv=await html2canvas(ps[i],{scale:2,backgroundColor:"#ffffff",logging:false});
+   if(i)pdf.addPage();pdf.addImage(cv.toDataURL("image/jpeg",.9),"JPEG",0,0,210,297)}
+  const blob=pdf.output("blob");pr.textContent="جاهز، اختاري حفظ الملف";
+  if(!dl){toast("حفظ الملفات غير متاح في هذه النافذة");return}
+  const nm=($("name").value||"زبونة").replace(/[\\/:*?"<>|]/g,"");
+  await dl.save({filename:`خطة مزيونة - ${nm}.pdf`,data:blob});toast("تم حفظ الملف");
+ }catch(e){if(e&&e.code==="declined"){}else if(e&&e.code==="host_unavailable")toast("التطبيق لا يحفظ الملفات، افتحي الرابط من المتصفح");else toast("تعذر إنشاء الملف")}
+ finally{pg.style.transform=old;document.body.classList.remove("cap");btn.disabled=false;setTimeout(()=>pr.style.display="none",1500);fit()}
+}
+$("pdfBtn").addEventListener("click",makePdf);
+
+/* ---------- start ---------- */
+try{const c=localStorage.getItem("mz_col");setCol(c||"#c48bd9")}catch(e){setCol("#c48bd9")}
+PF.forEach(k=>{try{const v=localStorage.getItem("mz_plan_"+k);if(v!=null&&k!=="name"&&k!=="h"&&k!=="w"&&k!=="man")$(k).value=v}catch(e){}});
+if(!$("act").value)$("act").value="1.375";if(!$("sur").value)$("sur").value="400";if(!$("date").value)$("date").value=today();
+calc();initStore();
+(async()=>{try{dl=await claude.use("downloads")}catch(e){dl=null}if(!dl){$("pdfBtn").hidden=true;$("csvBtn").hidden=true}})();
+}
+</script>
+</body>
+</html>
