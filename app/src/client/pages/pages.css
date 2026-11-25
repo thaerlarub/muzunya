@@ -1,0 +1,154 @@
+/* A4 plan pages. No color-mix() (accent shades are hex vars from setAccent), no letter-spacing or justify on Arabic. */
+.pages{display:flex;flex-direction:column;gap:16px;width:210mm}
+.fit{overflow:hidden}
+.fit>.pages{transform-origin:top right}
+.mzp{display:contents}
+.page{width:210mm;height:297mm;background:#fff;color:var(--ink);position:relative;overflow:hidden;box-shadow:0 6px 24px #0002;padding:16mm 14mm 24mm;display:flex;flex-direction:column;font-size:14px;line-height:1.6;text-align:right}
+.page .pc{flex:1;min-height:0;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.page .pno{position:absolute;top:0;right:12mm;background:var(--a2);font-weight:800;font-size:18px;width:30px;height:38px;border-radius:0 0 10px 10px;display:grid;place-items:center;color:var(--ad)}
+.page .foot{position:absolute;bottom:9mm;left:0;right:0;text-align:center;line-height:1.2}
+.page .foot .brand{font-family:'Aref Ruqaa',serif;font-size:24px;color:var(--ad)}
+.page .foot .h{font-size:11px;color:var(--muted)}
+.page .wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Aref Ruqaa',serif;font-size:110px;color:var(--a);opacity:.05;pointer-events:none;white-space:nowrap}
+.page .bar{background:var(--a);color:#fff;text-align:center;font-weight:800;font-size:17px;padding:9px 14px;border-radius:4px;line-height:1.45;margin:6px 0 10px}
+.page .bar small{display:block;font-weight:500;font-size:13px}
+.page .sub{text-align:center;font-weight:700;font-size:14px;margin:4px 0 12px}
+.page .pnote{font-size:12px;color:var(--muted);line-height:1.6}
+.page .tx{font-size:13px;margin:4px 0 8px}
+.page .tx p,.page .tx div{margin:0 0 4px}
+.page ul,.page ol{margin:4px 0;padding-right:18px;padding-left:0}
+.page li{margin:2px 0}
+.page .acc{color:var(--a);font-weight:700}
+.page .q{font-weight:800;color:var(--ad);white-space:nowrap}
+.page .blk{position:relative}
+.page .blk.grow{flex:1 1 auto;display:flex;flex-direction:column}
+.page .spc{flex:none}
+.page hr{border:0;border-top:1.5px solid var(--a2);margin:10px 0}
+/* breakfast cards and tiles */
+.page .cards{display:grid;grid-template-columns:repeat(3,1fr);border:2px solid var(--a);flex:1;max-height:200mm}
+.page .pcard{border:1.5px solid var(--a2);padding:12px 12px 10px;position:relative;display:flex;flex-direction:column}
+.page .ico{font-size:50px;text-align:center;line-height:1.1;margin-bottom:8px}
+.page .chk{display:flex;gap:6px;font-weight:700;font-size:14.5px;line-height:1.8}
+.page .chk::before{content:"✔";color:var(--a);font-size:15px}
+.page .pcard .pnote{margin-top:8px}
+.page .tag{position:absolute;top:8px;left:8px;background:var(--a2);color:var(--ad);font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:5px}
+.page .tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:16px 8px;margin:8px 0 12px}
+.page .tile{text-align:center;font-size:13px;font-weight:700;line-height:1.45}
+.page .tile .ico{font-size:34px;margin-bottom:4px}
+.page .ways{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.page .way{border:1.5px solid var(--a2);border-radius:10px;padding:10px 8px;text-align:center;font-size:12.5px;background:var(--a3)}
+.page .way b{display:block;color:var(--ad);font-size:13.5px;margin-bottom:3px}
+.page .way .ico{font-size:30px;margin-bottom:4px}
+/* tables */
+.page table{width:100%;border-collapse:collapse;font-size:12.5px}
+.page th{background:var(--a);color:#fff;font-weight:700;padding:8px 6px}
+.page td{border:1.5px solid var(--a2);padding:7px 8px;text-align:center;vertical-align:middle}
+.page .ptb td:first-child{font-weight:700}
+.page .ptb.c2 td:first-child{width:22%}
+.page .ptb.nh td{padding:14px 12px;font-size:13.5px}
+.page .ptb.nh td:first-child{width:28%}
+.page .box{width:16px;height:16px;border:1.5px solid var(--a);border-radius:4px;display:inline-block;vertical-align:middle}
+.page .wk{border:2px solid var(--a)}
+.page .wk td{padding:13px 10px;font-size:13.5px;line-height:1.7}
+.page .wk td.ml{font-weight:700}
+.page .wk tr.l td{background:#faf8fb}
+.page .wk .mn{color:var(--a);font-weight:700}
+.page .trk td:first-child{background:var(--a3);font-weight:700}
+.page .trk td{height:40px}
+/* Muzuna dose */
+.page .big25{display:flex;align-items:center;gap:14px;background:var(--a3);border:2px dashed var(--a);border-radius:14px;padding:10px 16px;margin:4px 0 12px}
+.page .big25 .n{white-space:nowrap;font-size:40px;font-weight:800;color:var(--ad);line-height:1}
+.page .big25 .lb{display:block;margin-top:4px;font-weight:700;color:var(--ad)}
+/* two columns (shopping list) */
+.page .pcols{display:grid;grid-template-columns:1fr 1fr;border:2px solid var(--a);margin:0 0 10px}
+.page .pcols>div{padding:10px 14px;font-size:12.5px;font-weight:500}
+.page .pcols>div+div{border-right:2px solid var(--a2)}
+.page .pcols p{margin:10px 0 4px;color:var(--a);font-size:14.5px;font-weight:700;border-bottom:1.5px solid var(--a2);padding-bottom:3px}
+.page .pcols p:first-child{margin-top:0}
+.page .pcols ul{margin:0;padding-right:16px}
+.page .sign{line-height:2.4;font-size:13.5px}
+/* cover (meal) */
+.page.cover{background:var(--a);color:#fff;padding:0}
+.page .blob{position:absolute;width:150mm;height:150mm;border-radius:50%;background:var(--c1);left:-40mm;bottom:-20mm}
+.page .blob2{position:absolute;width:90mm;height:90mm;border-radius:50%;background:var(--c2);right:-30mm;top:-25mm}
+.page .ch{position:relative;padding:20mm 16mm 0;text-align:center}
+.page .ch .lg{font-family:'Aref Ruqaa',serif;font-size:64px;line-height:1}
+.page .ch .tl{font-size:15px}
+.page .ch h1{font-size:30px;margin:12px 0 2px;font-weight:800}
+.page.cover .pc{padding-bottom:24mm}
+.page.cover .sub{font-weight:400;font-size:15px;margin:0}
+.page.cover .bar{background:none;font-size:22px;padding:0;margin:6px 16mm 0}
+.page.cover .tx{margin:6px 18mm;text-align:center;font-size:14px}
+.page .photo{position:relative;width:96mm;height:96mm;border-radius:50%;overflow:hidden;margin:10mm auto 8mm;border:6px solid #fff;flex:none}
+.page .photo img{width:100%;height:100%;object-fit:cover;display:block}
+.page .pimg{display:block;max-width:100%;margin:6px auto 10px;border-radius:12px;object-fit:cover}
+.page .cc{position:relative;margin:0 18mm;background:#fff;color:var(--ink);border-radius:16px;padding:12px 16px}
+.page .cc table{font-size:13px}
+.page .cc td{text-align:right}
+.page .cc td:first-child{color:var(--muted);width:42%}
+.page.cover .foot .brand,.page.cover .foot .h,.page.solid .foot .brand,.page.solid .foot .h{color:#fff}
+/* solid feature page (exercise cover) */
+.page.solid{background:var(--a);color:#fff}
+.page.solid .pc{justify-content:center;align-items:center;text-align:center}
+.page .ring{position:absolute;width:150mm;height:150mm;border-radius:50%;border:2px solid #ffffff55;box-shadow:0 0 0 16mm #ffffff10;top:50%;left:50%;transform:translate(-50%,-50%)}
+.page.solid .lg{position:relative;font-family:'Aref Ruqaa',serif;font-size:48px;line-height:1.2;margin-bottom:6px}
+.page.solid .bar{position:relative;background:none;font-size:50px;line-height:1.15;padding:0;margin:0 0 8px}
+.page.solid .bar small{font-size:24px;font-weight:700;margin-top:10px}
+.page.solid .sub{position:relative;color:#fff;font-size:18px}
+.page.solid .tx{position:relative;font-size:15px}
+.page .xbox{position:relative;margin-top:16px;background:#fff;color:var(--ink);border-radius:12px;padding:12px 20px;max-width:170mm;font-size:15px;font-weight:500;box-shadow:0 8px 24px #0002;line-height:1.8}
+/* points (badges + text) */
+.page .pr{display:grid;grid-template-columns:1fr;gap:18px;margin:8px 0 12px}
+.page .pi{display:flex;gap:16px;align-items:center}
+.page .badge{flex:none;width:76px;height:76px;border-radius:50%;background:var(--a);color:#fff;display:grid;place-items:center;font-size:14px;font-weight:800;text-align:center;line-height:1.2;box-shadow:0 0 0 5px var(--a2)}
+.page .pi .pt{margin:0;font-size:15px;font-weight:500;line-height:1.8;flex:1}
+.page .pi .pt b,.page .pi .pt strong{color:var(--ad)}
+/* exercise week grid */
+.page .week{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:6px 0 14px}
+.page .day{border:2px solid var(--a2);border-radius:14px;padding:12px 6px;text-align:center;min-height:62mm;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.page .day.on{border-color:var(--a);background:var(--a3)}
+.page .day .dn{font-size:15px;font-weight:800;color:var(--ad)}
+.page .day svg{width:72px;height:72px}
+.page .day .dt{font-size:14px;font-weight:700;line-height:1.45}
+.page .day.off .dt{color:var(--muted)}
+.page .day small{display:block;font-weight:500;font-size:12px}
+/* exercise day page */
+.page .dhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.page .ttl{color:var(--a);font-size:26px;font-weight:800;margin:0;line-height:1.3}
+.page .dchip{flex:none;background:var(--a2);color:var(--ad);font-weight:700;padding:6px 14px;border-radius:20px;font-size:14px;white-space:nowrap}
+.page .ex{display:grid;grid-template-columns:50px 1fr auto;gap:14px;align-items:center;padding:10px 0;border-bottom:1px dashed var(--a2)}
+.page .num{width:46px;height:46px;border-radius:50%;background:var(--a);color:#fff;display:grid;place-items:center;font-weight:800;font-size:21px}
+.page .exn{font-weight:800;font-size:18px;line-height:1.3}
+.page .exn small{display:block;font-weight:500;color:var(--muted);font-size:13px}
+.page .exn .en{direction:ltr;text-align:right}
+.page .exn a{font-size:12px;font-weight:700;color:var(--ad);margin-top:2px;display:inline-block}
+.page .sr{min-width:38mm;text-align:center;font-weight:800;color:var(--ad);background:var(--a3);border:1.5px solid var(--a2);border-radius:10px;padding:6px 12px;font-size:16px;white-space:nowrap}
+.page .sr small{display:block;font-weight:500;color:var(--muted);font-size:11px}
+.page .wu{font-size:14px;color:var(--muted);padding:6px 0}
+.page .wu b{color:var(--ink)}
+.page .ill{width:58mm;height:58mm;border-radius:50%;background:var(--a3);border:3px solid var(--a2);display:grid;place-items:center;margin:10mm auto 0;flex:none}
+.page .ill svg{width:72%;height:72%}
+.page .exlog td{height:44px;font-size:14px}
+.page .exlog td:first-child{text-align:right;font-weight:700;background:var(--a3);width:34%}
+/* edit mode (screen only) */
+.page.ed .q{border-bottom:1.5px dotted var(--a);padding:0 1px;outline:none;cursor:text}
+.page.ed .q.m{background:#fff6c9}
+.page.ed .q:focus{background:var(--a3)}
+.page.pick .blk{cursor:pointer;border-radius:4px}
+.page.pick .blk:hover{outline:2px dashed var(--a2);outline-offset:2px}
+.page.pick .blk.sel{outline:2.5px solid var(--ad);outline-offset:2px}
+.page.over{outline:4px dashed #e8a54b;outline-offset:-4px}
+.page .overtag{position:absolute;bottom:2mm;left:4mm;right:4mm;z-index:3;background:#fff1e0;color:#9a5300;border:1px solid #f3d2a8;border-radius:8px;font-size:15px;font-weight:700;padding:4px 10px;text-align:center}
+@page{size:A4;margin:0}
+@media print{
+  html,body{background:#fff!important}
+  .prt{padding:0!important}
+  .fit{height:auto!important;overflow:visible}
+  .fit>.pages{transform:none!important;gap:0;width:auto}
+  .page{box-shadow:none;outline:0!important;break-after:page;page-break-after:always}
+  .pages>.mzp:last-child>.page:last-child,.pages>.page:last-child{break-after:auto;page-break-after:auto}
+  .page .overtag{display:none}
+  .page.ed .q{border:0}.page.ed .q.m{background:none}
+  .page.pick .blk.sel,.page.pick .blk:hover{outline:0}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
