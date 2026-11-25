@@ -132,6 +132,7 @@
 /* gift print: A4 portrait */
 @page{size:A4;margin:0}
 .gift{background:#ebe7ee;min-height:100vh;padding:16px 0;display:flex;flex-direction:column;align-items:center;gap:16px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.gift>.fit{width:100%}
 .gf-bar{position:sticky;top:0;z-index:5;display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:#fff;padding:8px 16px;border-radius:12px;box-shadow:0 2px 10px #0001;max-width:calc(100vw - 32px)}
 .gf-page{width:210mm;height:297mm;background:#fff;padding:18mm 16mm;overflow:hidden;position:relative;display:flex;flex-direction:column;gap:8mm;box-shadow:0 6px 24px #0002;break-after:page}
 .gf-cover{background:var(--a);color:#fff;align-items:center;justify-content:center;text-align:center;gap:4mm}

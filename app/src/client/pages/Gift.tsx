@@ -9,6 +9,7 @@ import { fmtDate } from "../ui";
 import { Mascot, wornItems } from "../mascot/Mascot";
 import { WeightChart, SizesCompare } from "../charts";
 import { BadgeShelf } from "../game/Badges";
+import { Fit } from "./PlanPages";
 import "../customer/customer.css";
 
 type Data = Pick<AdminCustomer, "customer" | "followups" | "photos" | "badges">;
@@ -56,7 +57,7 @@ export function Gift(p: { cid: string; me: MeAdmin | MeCustomer }) {
         <button class="btn g" onClick={back}>رجوع</button>
         <span class="note">اختاري "حفظ كملف PDF" من نافذة الطباعة.</span>
       </div>
-
+      <Fit>
       <section class="gf-page gf-cover">
         <div class="logo">مزيونة</div>
         <p class="gf-tl">رحلة</p>
@@ -97,6 +98,7 @@ export function Gift(p: { cid: string; me: MeAdmin | MeCustomer }) {
         <div class="gf-text">{c.letter}</div>
         <p class="gf-sign">مع حب، مزيونة</p>
       </section>}
+      </Fit>
     </div>
   );
 }
