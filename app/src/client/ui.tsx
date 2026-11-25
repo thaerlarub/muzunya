@@ -37,7 +37,7 @@ export function Field(p: { label: string; children: ComponentChildren }) {
 export function ConfirmButton(p: { label: string; confirm: string; onConfirm: () => void; class?: string }) {
   const [armed, setArmed] = useState(false);
   useEffect(() => { if (armed) { const t = setTimeout(() => setArmed(false), 3000); return () => clearTimeout(t); } }, [armed]);
-  return <button class={p.class ?? "btn r"} onClick={() => (armed ? (setArmed(false), p.onConfirm()) : setArmed(true))}>{armed ? p.confirm : p.label}</button>;
+  return <button type="button" class={p.class ?? "btn r"} onClick={() => (armed ? (setArmed(false), p.onConfirm()) : setArmed(true))}>{armed ? p.confirm : p.label}</button>;
 }
 
 /** Colour mix in JS (no color-mix in print pages). */

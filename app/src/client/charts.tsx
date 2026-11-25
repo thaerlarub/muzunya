@@ -20,7 +20,7 @@ export function WeightChart(p: { points: { d: string; w: number }[]; goal?: numb
   const [hi, setHi] = useState<number | null>(null);
   const pts = [...p.points].sort((a, b) => a.d.localeCompare(b.d));
   if (pts.length < 2) return <div ref={ref} class="ch-empty">سجلي وزنين على الأقل ليظهر الرسم.</div>;
-  const H = 200, pl = 36, pr = 12, pt = 14, pb = 26;
+  const H = 200, pl = 40, pr = 24, pt = 14, pb = 26;
   const vals = pts.map((x) => x.w).concat(p.goal ? [p.goal] : []);
   const mn = Math.floor(Math.min(...vals) - 0.5), mx = Math.ceil(Math.max(...vals) + 0.5);
   const t0 = Date.parse(pts[0].d), span = Math.max(1, Date.parse(pts[pts.length - 1].d) - t0);
@@ -37,7 +37,7 @@ export function WeightChart(p: { points: { d: string; w: number }[]; goal?: numb
   };
   return (
     <div ref={ref} class="ch">
-      <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} direction="ltr" role="img" aria-label="الوزن مع الوقت" onPointerMove={pick} onPointerDown={pick} onPointerLeave={() => setHi(null)}>
+      <svg style="overflow:visible" width={W} height={H} viewBox={`0 0 ${W} ${H}`} direction="ltr" role="img" aria-label="الوزن مع الوقت" onPointerMove={pick} onPointerDown={pick} onPointerLeave={() => setHi(null)}>
         {ticks.map((v) => <g key={v}><line x1={pl} x2={W - pr} y1={Y(v)} y2={Y(v)} stroke="#eee6f1" /><text x={pl - 6} y={Y(v) + 4} font-size="11" fill="#6f6478" text-anchor="end">{v}</text></g>)}
         {p.goal ? <g><line x1={pl} x2={W - pr} y1={Y(p.goal)} y2={Y(p.goal)} stroke="var(--c2)" stroke-width="1.5" stroke-dasharray="5 4" /><text x={pl + 4} y={Y(p.goal) - 5} font-size="11" fill="var(--ad)">الهدف {p.goal}</text></g> : null}
         <polyline points={pts.map((q) => X(q.d) + "," + Y(q.w)).join(" ")} fill="none" stroke="var(--a)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
