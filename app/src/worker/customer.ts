@@ -1,6 +1,6 @@
 // Customer routes. Every query uses the session user id, never an id from the request (except op ids, always scoped to her).
 import { Hono } from "hono";
-import { applyTick } from "../shared/sync.ts";
+import { applyTick, versionStamp } from "../shared/sync.ts";
 import { canTick, todayMuscat } from "../shared/dates.ts";
 import { earnedBadges } from "../shared/badges.ts";
 import { role } from "./auth.ts";
@@ -14,16 +14,18 @@ const OP_ID = /^[\w-]{1,64}$/;
 const MASCOTS = ["girl", "kitten", "bunny", "camel"];
 const WEAR = ["bow", "necklace", "scarf", "glasses", "flower", "crown"];
 
-/** Throws 400 on any malformed op; returns the op with follow-up data validated. */
-function checkOp(op: any, now: number): Op {
-  const t = op?.t;
-  if (typeof t !== "number" || !Number.isFinite(t) || t < now - 60 * DAY || t > now + 600_000) return fail(400, "op");
+/** Returns the op with follow-up data validated, or null to skip it (one bad op must never cost her the rest of the batch). */
+function checkOp(op: any, now: number): Op | null {
+  let t = op?.t;
+  if (typeof t !== "number" || !Number.isFinite(t) || t < now - 60 * DAY) return null;
+  t = Math.min(t, now); // a phone clock running fast must not lose ticks
+
   if (op.kind === "tick" && isDate(op.date) && typeof op.key === "string" && KEY.test(op.key) && typeof op.v === "number" && Number.isFinite(op.v))
     return { kind: "tick", date: op.date, key: op.key, v: op.v, t };
   if (op.kind === "fu" && typeof op.id === "string" && OP_ID.test(op.id) && op.data && typeof op.data === "object")
     return { kind: "fu", id: op.id, data: pick(op.data, FU_FIELDS) as any, t };
   if (op.kind === "fudel" && typeof op.id === "string" && OP_ID.test(op.id)) return { kind: "fudel", id: op.id, t };
-  return fail(400, "op");
+  return null;
 }
 
 export const customerRoutes = new Hono<Env>();
@@ -32,7 +34,7 @@ customerRoutes.post("/api/sync", role("customer"), async (c) => {
   const db = c.env.DB, uid = c.var.user.id, now = Date.now();
   const b = await json(c);
   if (!Array.isArray(b.ops) || b.ops.length > 500) return fail(400, "ops");
-  const ops = b.ops.map((o: unknown) => checkOp(o, now));
+  const ops = b.ops.map((o: unknown) => checkOp(o, now)).filter(Boolean);
 
   const [cr, vr, lr] = await db.batch<Row>([
     db.prepare(CUSTOMER_SQL + " WHERE c.user_id = ?").bind(uid),
@@ -90,6 +92,7 @@ customerRoutes.post("/api/sync", role("customer"), async (c) => {
     logs: [...touched].filter((d) => logs.has(d)).map((date) => ({ date, body: logs.get(date)! })),
     followups,
     badges: br[br.length - 1].results.map(badge),
+    vstamp: versionStamp(versions),
   });
 });
 

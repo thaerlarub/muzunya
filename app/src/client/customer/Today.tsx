@@ -125,7 +125,7 @@ export function Today() {
                         {lib?.video_url && <a class="btn g sm" href={lib.video_url} target="_blank" rel="noopener noreferrer">شاهدي الفيديو</a>}
                         <label class="cu-kg">
                           <input type="number" inputMode="decimal" min="0" step="0.5" disabled={!exOk} value={val(body, "kg:" + i) || ""} placeholder="0"
-                            onChange={(e) => tick("kg:" + i, Math.max(0, +e.currentTarget.value || 0))} aria-label="الوزن المستخدم بالكيلو" />
+                            onChange={(e) => tick("kg:" + i, Math.min(500, Math.max(0, +e.currentTarget.value || 0)))} aria-label="الوزن المستخدم بالكيلو" />
                           <span>كجم</span>
                         </label>
                       </div>

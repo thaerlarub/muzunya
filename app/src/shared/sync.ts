@@ -8,3 +8,6 @@ export function mergeDay(a: DayBody, b: DayBody): DayBody {
 }
 
 export const applyTick = (body: DayBody, key: string, v: number, t: number): DayBody => mergeDay(body, { [key]: [v, t] });
+
+/** Changes whenever a plan version is added or removed; lets the phone notice a new plan during sync. */
+export const versionStamp = (vs: { created_at: number }[]): string => `${vs.length}:${vs.reduce((m, v) => Math.max(m, v.created_at), 0)}`;

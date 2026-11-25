@@ -86,7 +86,8 @@ auth.post("/api/auth/login", async (c) => {
      RETURNING count`,
   );
   const counts = await db.batch<{ count: number }>(keys.map((k) => bump.bind(k, now, WINDOW, WINDOW)));
-  if (counts.some((r) => (r.results[0]?.count ?? 0) > 5)) return fail(429, "locked");
+  const [pc, ic] = counts.map((r) => r.results[0]?.count ?? 0);
+  if (pc > 5 || ic > 50) return fail(429, "locked"); // 5 per phone; IPs are shared by many phones on mobile networks
 
   const u = await db.prepare("SELECT id, role, salt, pw_hash, status FROM users WHERE phone = ?").bind(phone).first<Row>();
   const ok = await checkPw(pw, u?.salt ?? DUMMY_SALT, u?.pw_hash ?? DUMMY_HASH);

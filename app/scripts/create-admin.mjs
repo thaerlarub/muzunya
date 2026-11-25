@@ -12,7 +12,7 @@ function normPhone(s) {
   let p = s
     .replace(/[٠-٩]/g, (d) => String(d.charCodeAt(0) - 0x660))
     .replace(/[۰-۹]/g, (d) => String(d.charCodeAt(0) - 0x6f0))
-    .replace(/[\s\-.()]/g, "");
+    .replace(/[\s\-.()\p{Cf}]/gu, "");
   if (p.startsWith("00")) p = "+" + p.slice(2);
   if (/^[79]\d{7}$/.test(p)) return "+968" + p;
   if (/^968\d{8}$/.test(p)) return "+" + p;

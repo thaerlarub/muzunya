@@ -109,8 +109,13 @@ check("tick today persists", day?.body["m:bf"]?.[0] === 1, JSON.stringify(r.data
 check("tick tomorrow skipped", !r.data.logs.some((l) => l.date === tomorrow));
 check("newer t wins when older sent second", day?.body["m:s1"]?.[0] === 1 && day.body["m:s1"][1] === now, JSON.stringify(day));
 check("fu op saved as hers", r.data.followups.some((f) => f.id === "fu-1" && f.weight === 50.5 && f.author === "customer"));
-r = await a.req("POST", "/api/sync", { ops: [{ kind: "tick", date: today, key: "bad key", v: 1, t: now }] });
-check("bad op 400", r.status === 400);
+r = await a.req("POST", "/api/sync", { ops: [
+  { kind: "tick", date: today, key: "bad key", v: 1, t: now },
+  { kind: "tick", date: today, key: "kg:0", v: null, t: now },
+  { kind: "tick", date: today, key: "m:s2", v: 1, t: Date.now() + 3600_000 }, // phone clock an hour fast
+] });
+check("bad ops skipped, good op kept, future time clamped", r.status === 200 && r.data.logs.find((l) => l.date === today)?.body["m:s2"]?.[0] === 1
+  && r.data.logs.find((l) => l.date === today).body["m:s2"][1] <= Date.now() && typeof r.data.vstamp === "string", JSON.stringify(r.data?.logs));
 
 // photos
 const jpeg = new Uint8Array([0xff, 0xd8, 0xff, 0xe0, 0, 0x10, 0x4a, 0x46, 0x49, 0x46, 0, 1, 0xff, 0xd9]);
