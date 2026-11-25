@@ -20,5 +20,8 @@
     "src/worker",
     "src/shared",
     "worker-configuration.d.ts"
+  ],
+  "exclude": [
+    "src/**/*.test.ts"
   ]
 }

@@ -6,7 +6,7 @@
     "build": "vite build",
     "watch": "vite build --watch",
     "dev": "wrangler dev --port 8787",
-    "test": "node --test src/shared/",
+    "test": "node --test src/shared/*.test.ts",
     "check": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.worker.json",
     "db:local": "wrangler d1 migrations apply DB --local"
   },
