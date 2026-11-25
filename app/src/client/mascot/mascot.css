@@ -1,0 +1,41 @@
+/* Mascot stage. The idle delay comes from the --d variable, set only on .idle, so it never delays hop/yum/flex. */
+.ms{position:relative;flex:none;margin-inline:auto}
+.ms-shadow{position:absolute;left:50%;bottom:5%;width:42%;height:5%;border-radius:50%;background:#3b294726;transform:translateX(-50%);transition:width .45s ease-out}
+.ms-fig,.ms-fx{position:absolute;inset:4%}
+.ms-fig{transform-origin:50% 92%}
+.ms-art{width:100%;height:100%}
+.ms-fx{pointer-events:none}
+.ms-fx i{position:absolute;pointer-events:none;opacity:0}
+.ms-pop{position:absolute;inset:0;pointer-events:none}
+.ms-heart{width:12%;aspect-ratio:1}
+.ms-spark{width:9%;aspect-ratio:1}
+.ms-petal{width:9px;height:12px;border-radius:60% 60% 60% 60%/80% 80% 40% 40%}
+.ms-glow{width:34%;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,#fff6d8 0,#fbe3f0aa 45%,#fbe3f000 70%)}
+.ms-heart svg,.ms-spark svg{display:block;width:100%;height:100%}
+.ms-z{position:absolute;top:8%;inset-inline-end:16%;font:700 18px/1 Tajawal,sans-serif;color:#8e7aa0;opacity:.7}
+.ms-food{position:fixed;left:0;top:0;width:36px;height:36px;font-size:28px;line-height:36px;text-align:center;z-index:70;pointer-events:none}
+@media (prefers-reduced-motion:no-preference){
+ .ms-fig.idle{animation:ms-bob 2.8s ease-in-out infinite;animation-delay:var(--d,0s)}
+ .ms.sleepy .ms-fig.idle{animation-name:ms-doze;animation-duration:4.8s}
+ @keyframes ms-bob{0%,100%{transform:translateY(0) scale(1,1)}50%{transform:translateY(-2.5%) scale(.99,1.015)}}
+ @keyframes ms-doze{0%,100%{transform:scale(1,1)}50%{transform:scale(1.01,.985)}}
+ .ms-fig.hop{animation:ms-hop .75s cubic-bezier(.3,.7,.4,1)}
+ @keyframes ms-hop{0%{transform:none}18%{transform:scale(1.08,.88)}45%{transform:translateY(-16%) scale(.94,1.08)}72%{transform:translateY(0) scale(1.06,.93)}86%{transform:scale(.98,1.02)}100%{transform:none}}
+ .ms-fig.yum{animation:ms-yum .5s cubic-bezier(.3,.7,.4,1)}
+ @keyframes ms-yum{0%{transform:none}30%{transform:scale(1.07,.92)}60%{transform:scale(.97,1.04)}100%{transform:none}}
+ .ms-fig.flex{animation:ms-flex .65s cubic-bezier(.3,.7,.4,1)}
+ @keyframes ms-flex{0%{transform:none}25%{transform:scale(1.05,.94)}55%{transform:translateY(-5%) scale(.98,1.03)}80%{transform:scale(1.02,.98)}100%{transform:none}}
+ .ms-petal{animation:ms-petal .95s cubic-bezier(.2,.7,.3,1) forwards}
+ @keyframes ms-petal{0%{opacity:0;transform:translate(-50%,-50%) rotate(0) scale(.4)}15%{opacity:1}100%{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) rotate(var(--r)) scale(1)}}
+ .ms-heart{animation:ms-rise .9s ease-out forwards}
+ @keyframes ms-rise{0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}25%{opacity:1;transform:translate(-50%,-90%) scale(1.1)}100%{opacity:0;transform:translate(-50%,-260%) scale(.9)}}
+ .ms-spark{animation:ms-spark .7s ease-out forwards}
+ .ms-spark.late{animation-delay:.15s}
+ @keyframes ms-spark{0%{opacity:0;transform:translate(-50%,-50%) scale(.2) rotate(0)}40%{opacity:1;transform:translate(-50%,-50%) scale(1.1) rotate(45deg)}100%{opacity:0;transform:translate(-50%,-50%) scale(.6) rotate(90deg)}}
+ .ms-glow{animation:ms-glow 1.05s ease-out forwards}
+ @keyframes ms-glow{0%{opacity:0;transform:translate(-50%,-50%) scale(.4)}40%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.3)}}
+ .ms-pop{animation:ms-pop .7s cubic-bezier(.3,.7,.4,1) forwards}
+ @keyframes ms-pop{0%{transform:scale(0);opacity:0}55%{transform:scale(1.18);opacity:1}100%{transform:scale(1);opacity:1}}
+ .ms-z{animation:ms-z 2.6s ease-in-out infinite}
+ @keyframes ms-z{0%{opacity:0;transform:translate(0,6px) scale(.8)}40%{opacity:.75}100%{opacity:0;transform:translate(-8px,-12px) scale(1.1)}}
+}
