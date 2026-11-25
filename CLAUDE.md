@@ -145,3 +145,7 @@ Test setup: `npm i html2canvas@1.4.1 jspdf@2.5.1 && pip install playwright && pl
 - Name: مزيونة, tagline: خلطة الأنوثة. Brand font: Aref Ruqaa (logo/headings), body font: Tajawal (Google Fonts).
 - Default accent `#c48bd9` (mauve). Alternatives offered: `#d98ca3`, `#b98a6e`, `#7fa9a0`.
 - Units in content: م.ك = tablespoon, م.ص = teaspoon, غ = grams, مل = ml.
+
+## 12. New app on Cloudflare (2026-11-25)
+
+The artifact app above is being replaced by a multi-user app in `app/` (branch `build`): Preact + Hono Worker + D1 + R2, admin and customer accounts, plans with a free page builder, daily checklists synced from the phone, follow-up, gallery, mascots and badges, plan and gift PDFs by browser print. Start with `app/README.md` (deploy, local dev), the design `docs/superpowers/specs/2026-11-25-muzuna-app-design.md` (section 0 lists the owner's scope cuts) and `app/API.md`. The recipe book has 17 recipes, not 18.
